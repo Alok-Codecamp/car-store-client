@@ -1,0 +1,27 @@
+.update-profile-form input {
+  border: 1px solid darkslategray;
+  background-color: white;
+  color: black;
+  height: 36px;
+  width: 240px;
+  margin: 8px 0px;
+  border-radius: 10px;
+  padding-left: 10px;
+}
+
+.update-profile-label,
+.change-password-label {
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.update-profile-input::placeholder {
+  color: black;
+}
+
+.update-profile-input-error {
+  color: red;
+}
+.update-profile-input.error::placeholder {
+  color: rgb(253, 21, 21);
+}
