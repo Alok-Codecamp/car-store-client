@@ -5,6 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import { ICars } from "../../types/carInterface";
 import { Box } from "@mui/material";
+
 const ImgMediaCard = (car: any) => {
   const carData = car?.data as ICars;
 

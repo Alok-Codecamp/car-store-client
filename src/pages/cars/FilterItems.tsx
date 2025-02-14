@@ -1,9 +1,18 @@
-import { Box } from "@mui/material";
-import React from "react";
-
+import { Category, ExpandLess, ExpandMore, Search } from "@mui/icons-material";
+import {
+  Box,
+  Collapse,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@mui/material";
+import React, { ReactNode } from "react";
+import "./Cars.css";
 export type TRange = {
-  minPrice: string;
-  maxPrice: string;
+  minPrice: number;
+  maxPrice: number;
 };
 
 interface FilterItemsProps {
@@ -17,7 +26,7 @@ export const FilterPriceRange: React.FC<FilterItemsProps> = ({
   priceRange,
 }) => {
   const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = Number(e.target.value);
     const name = e.target.name as keyof TRange;
     setPriceRange((prev: TRange) => ({ ...prev, [name]: value }));
   };
@@ -33,10 +42,10 @@ export const FilterPriceRange: React.FC<FilterItemsProps> = ({
     >
       <h4 style={{ lineHeight: "0px" }}>Price Range</h4>
       <input
-        defaultValue={10000}
+        defaultValue={"10000"}
         type="range"
-        min={10000}
-        max={40000}
+        min={"10000"}
+        max={"40000"}
         name="minPrice"
         onChange={handleRangeChange}
         style={{
@@ -46,10 +55,10 @@ export const FilterPriceRange: React.FC<FilterItemsProps> = ({
         }}
       />
       <input
-        defaultValue={10000}
+        defaultValue={"50000"}
         type="range"
-        min={50000}
-        max={100000}
+        min={"50000"}
+        max={"99000"}
         name="maxPrice"
         onChange={handleRangeChange}
         style={{
@@ -98,7 +107,7 @@ type TSelectItemProps = {
   name: string;
   defaultValue: string;
 };
-export const SelectItem = ({
+export const SelectLimit = ({
   setSelect,
   optionValue,
   name,
@@ -130,5 +139,114 @@ export const SelectItem = ({
         ))}
       </select>
     </Box>
+  );
+};
+
+type TSearchProps = {
+  setSearch: (value: string) => void;
+  searchBoxStyle: string;
+  handleSearch: () => void;
+};
+export const SearchBox = ({
+  setSearch,
+  searchBoxStyle,
+  handleSearch,
+}: TSearchProps) => {
+  return (
+    <Box>
+      <span>Search</span>
+      <input
+        className={searchBoxStyle}
+        type="text"
+        placeholder="Search"
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <button
+        style={{
+          position: "absolute",
+          border: "none",
+          backgroundColor: "white",
+          marginLeft: "-40px",
+          boxShadow: "none",
+          marginTop: "4px",
+        }}
+        onClick={handleSearch}
+      >
+        <Search />
+      </button>
+    </Box>
+  );
+};
+
+// filter llist item
+type TFilterListItemProps = {
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+  filterName: string[];
+};
+export const FilterListItem = ({
+  filterName,
+  value,
+  handleChange,
+}: TFilterListItemProps) => {
+  console.log(value, filterName);
+  return (
+    <ListItemButton
+      sx={{ pl: 8 }}
+      onClick={() =>
+        handleChange({
+          target: {
+            value: value,
+            checked: !filterName.includes(value),
+          },
+        } as React.ChangeEvent<HTMLInputElement>)
+      }
+    >
+      <input
+        style={{
+          width: "20px",
+        }}
+        type="checkbox"
+        checked={filterName.includes(value)}
+        readOnly
+        value="Sport"
+      />
+      <Typography fontSize={12}>{value}</Typography>
+    </ListItemButton>
+  );
+};
+
+// filter item
+
+type TFilterItemProps = {
+  handleDropDown: () => void;
+  open: boolean;
+  children: ReactNode;
+};
+export const FilterItems = ({
+  handleDropDown,
+  open,
+  children,
+}: TFilterItemProps) => {
+  return (
+    <List
+      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+    >
+      <ListItemButton onClick={handleDropDown}>
+        <ListItemIcon>
+          <Category />
+        </ListItemIcon>
+        <ListItemText primary="Category" />
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          {/* category suv */}
+          {children}
+        </List>
+      </Collapse>
+    </List>
   );
 };

@@ -55,6 +55,12 @@ input[type="range"]::-moz-range-track {
   height: 6px;
 }
 
+.search-box-lg {
+  height: 36px;
+  width: 400px;
+  margin-left: 10px;
+}
+
 /* input[type="range"]::-moz-range-thumb {
   background: #ff5733;
   width: 20px;

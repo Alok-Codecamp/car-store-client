@@ -5,44 +5,55 @@ import { Link, useLocation } from "react-router-dom";
 import { FilterList, Home } from "@mui/icons-material";
 import "./Cars.css";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { useEffect, useState } from "react";
-// import { useForm } from "react-hook-form";
-import { FilterPriceRange, SelectItem } from "./FilterItems";
+import { useEffect, useMemo, useState } from "react";
+import {
+  FilterItems,
+  FilterListItem,
+  FilterPriceRange,
+  SearchBox,
+  SelectLimit,
+} from "./FilterItems";
 import FeaturedSkelton from "../../components/layout/Skelton";
 import { ICars } from "../../types/carInterface";
 import ImgMediaCard from "../../components/layout/Card";
-
 type Anchor = "right";
 const Cars = () => {
+  const [open, setOpen] = useState(true);
   const [state, setState] = useState({ right: false });
   const [priceRange, setPriceRange] = useState({
-    minPrice: "10000",
-    maxPrice: "100000",
+    minPrice: 10000,
+    maxPrice: 99000,
   });
   const [limit, setLimit] = useState("10");
   const [sortBy, setSortBy] = useState("Default");
   const [sort, setSort] = useState("-price");
-  const { data: cars, isLoading } = useGetCarsQuery([
-    { name: "limit", value: limit },
-    { name: "sort", value: sort },
-    {
-      name: "price",
-      value: { $gte: priceRange.minPrice, $lte: priceRange.maxPrice },
-    },
-    { name: "category", value: "SUV" },
-  ]);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState<string[]>([]);
+  const [brand, setBrand] = useState<string[]>([]);
+  // set sort value based on selected sort
+  useEffect(() => {
+    setSort(sortBy === "Price(Low>High)" ? "price" : "-price");
+  }, [sortBy]);
+  const queryArray = useMemo(() => {
+    return [
+      { name: "limit", value: limit },
+      { name: "sort", value: sort },
+      {
+        name: "price",
+        value: { min: priceRange.minPrice, max: priceRange.maxPrice },
+      },
+      { name: "search", value: search },
+      ...category.map((item) => ({ name: "category", value: item })),
+      ...brand.map((item) => ({ name: "brand", value: item })),
+    ];
+  }, [sort, priceRange, search, category, limit]);
+
+  // Get car query
+  const { data: cars, isLoading } = useGetCarsQuery(queryArray);
+  // get location for breadCrumbs
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
   const usableLocation = splitLocation.slice(1, splitLocation.length);
-  console.log(priceRange);
-  // set sort value based on selected sort
-  useEffect(() => {
-    if (sortBy === "Price(Low>High)") {
-      setSort("price");
-    } else {
-      setSort("-price");
-    }
-  }, [sortBy]);
 
   // drawer toggler
   const toggleDrawer =
@@ -60,8 +71,36 @@ const Cars = () => {
       setState({ ...state, [anchor]: open });
     };
 
-  console.log(limit, sortBy);
-  const list = (anchor: Anchor) => (
+  // handle search box
+  const handleSearch = () => {
+    console.log(search);
+    setSearch(search);
+  };
+
+  // handle Category Change
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    setCategory((prev) =>
+      checked ? [...prev, value] : prev.filter((item) => item !== value)
+    );
+  };
+
+  // handle Brande change
+
+  const handleBrandChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    setBrand((prev) =>
+      checked ? [...prev, value] : prev.filter((item) => item !== value)
+    );
+  };
+
+  const handleFilterDropDwon = () => {
+    setOpen(!open);
+  };
+
+  console.log(category);
+
+  const list = () => (
     <Box
       sx={{ width: 300 }}
       role="presentation"
@@ -117,6 +156,33 @@ const Cars = () => {
               priceRange={priceRange}
             />
             <Divider />
+            {/* dorpdown list  */}
+            {/* <FilterItems
+              handleDropDown={handleFilterDropDwon}
+              open={open}
+              filterName={category}
+              }
+            /> */}
+            {/* dropdownListEnd */}
+            <Divider />
+
+            <FilterItems handleDropDown={handleFilterDropDwon} open={open}>
+              <FilterListItem
+                handleChange={handleCategoryChange}
+                value="SUV"
+                filterName={category}
+              />
+              <FilterListItem
+                handleChange={handleCategoryChange}
+                value="Sedan"
+                filterName={category}
+              />
+              <FilterListItem
+                handleChange={handleCategoryChange}
+                value="Coupe"
+                filterName={category}
+              />
+            </FilterItems>
           </Box>
           <Box>
             <div className="filter-pagination-search-container">
@@ -147,7 +213,7 @@ const Cars = () => {
                 onClose={toggleDrawer("right", false)}
                 onOpen={toggleDrawer("right", true)}
               >
-                {list("right")}
+                {list()}
               </SwipeableDrawer>
 
               <Box
@@ -158,13 +224,32 @@ const Cars = () => {
                   marginLeft: "auto",
                 }}
               >
-                <SelectItem
+                {/* Search item box */}
+                <Box
+                  sx={{
+                    display: { lg: "flex", md: "flex", sm: "none", xs: "none" },
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginRight: "20px",
+                  }}
+                >
+                  <SearchBox
+                    searchBoxStyle="search-box-lg"
+                    setSearch={setSearch}
+                    handleSearch={handleSearch}
+                  />
+                </Box>
+
+                {/* Select item limit  */}
+                <SelectLimit
                   name="Show"
                   defaultValue="20"
                   setSelect={setLimit}
                   optionValue={["10", "14", "18", "24"]}
                 />
-                <SelectItem
+
+                {/* sort item by price  */}
+                <SelectLimit
                   name="Sort By"
                   defaultValue="Default"
                   setSelect={setSortBy}
@@ -189,6 +274,7 @@ const Cars = () => {
               ) : (
                 <Grid2 container spacing={2}>
                   {cars &&
+                    Array.isArray(cars.data) &&
                     cars?.data.map((car: ICars, index: number) => (
                       <Grid2 key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
                         <ImgMediaCard data={car} />
