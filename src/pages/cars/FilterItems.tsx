@@ -1,4 +1,4 @@
-import { Category, ExpandLess, ExpandMore, Search } from "@mui/icons-material";
+import { ExpandLess, ExpandMore, Search } from "@mui/icons-material";
 import {
   Box,
   Collapse,
@@ -219,14 +219,21 @@ export const FilterListItem = ({
 // filter item
 
 type TFilterItemProps = {
-  handleDropDown: () => void;
+  handleDropDown: (index: number) => void;
   open: boolean;
   children: ReactNode;
+  index: number;
+
+  dropDownName: string;
+  drowDownIcon: ReactNode;
 };
 export const FilterItems = ({
   handleDropDown,
   open,
   children,
+  index,
+  dropDownName,
+  drowDownIcon,
 }: TFilterItemProps) => {
   return (
     <List
@@ -234,11 +241,9 @@ export const FilterItems = ({
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton onClick={handleDropDown}>
-        <ListItemIcon>
-          <Category />
-        </ListItemIcon>
-        <ListItemText primary="Category" />
+      <ListItemButton onClick={() => handleDropDown(index)}>
+        <ListItemIcon>{drowDownIcon}</ListItemIcon>
+        <ListItemText primary={dropDownName} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>

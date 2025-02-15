@@ -2,7 +2,12 @@ import NavBar from "../../components/navBar/NavBar";
 import { useGetCarsQuery } from "../../redux/features/admin/carManagement/carManagementApi";
 import { Box, Breadcrumbs, Button, Divider, Grid2 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
-import { FilterList, Home } from "@mui/icons-material";
+import {
+  BrandingWatermark,
+  Category,
+  FilterList,
+  Home,
+} from "@mui/icons-material";
 import "./Cars.css";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { useEffect, useMemo, useState } from "react";
@@ -16,9 +21,11 @@ import {
 import FeaturedSkelton from "../../components/layout/Skelton";
 import { ICars } from "../../types/carInterface";
 import ImgMediaCard from "../../components/layout/Card";
+
 type Anchor = "right";
+
 const Cars = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState([true, true, true]);
   const [state, setState] = useState({ right: false });
   const [priceRange, setPriceRange] = useState({
     minPrice: 10000,
@@ -30,6 +37,7 @@ const Cars = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string[]>([]);
   const [brand, setBrand] = useState<string[]>([]);
+
   // set sort value based on selected sort
   useEffect(() => {
     setSort(sortBy === "Price(Low>High)" ? "price" : "-price");
@@ -46,7 +54,7 @@ const Cars = () => {
       ...category.map((item) => ({ name: "category", value: item })),
       ...brand.map((item) => ({ name: "brand", value: item })),
     ];
-  }, [sort, priceRange, search, category, limit]);
+  }, [sort, priceRange, search, category, limit, brand]);
 
   // Get car query
   const { data: cars, isLoading } = useGetCarsQuery(queryArray);
@@ -93,9 +101,20 @@ const Cars = () => {
       checked ? [...prev, value] : prev.filter((item) => item !== value)
     );
   };
+  // handle model change
+  // const handleModelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { value, checked } = e.target;
+  //   setModel((prev) =>
+  //     checked ? [...prev, value] : prev.filter((item) => item !== value)
+  //   );
+  // };
 
-  const handleFilterDropDwon = () => {
-    setOpen(!open);
+  const handleFilterDropDwon = (index: number) => {
+    setOpen((prev) => {
+      const newOpen = [...prev];
+      newOpen[index] = !newOpen[index];
+      return newOpen;
+    });
   };
 
   console.log(category);
@@ -108,6 +127,82 @@ const Cars = () => {
       onKeyDown={(e) => e.stopPropagation()}
     >
       <FilterPriceRange setPriceRange={setPriceRange} priceRange={priceRange} />
+      {/* filter category  */}
+      <Divider />
+      <FilterItems
+        dropDownName="Category"
+        drowDownIcon={<Category />}
+        handleDropDown={handleFilterDropDwon}
+        index={0}
+        open={open[0]}
+      >
+        <FilterListItem
+          handleChange={handleCategoryChange}
+          value="SUV"
+          filterName={category}
+        />
+        <FilterListItem
+          handleChange={handleCategoryChange}
+          value="Sedan"
+          filterName={category}
+        />
+        <FilterListItem
+          handleChange={handleCategoryChange}
+          value="Coupe"
+          filterName={category}
+        />
+      </FilterItems>
+      <Divider />
+
+      {/* Filter Brand  */}
+      <FilterItems
+        dropDownName="Brand"
+        drowDownIcon={<BrandingWatermark />}
+        handleDropDown={handleFilterDropDwon}
+        open={open[1]}
+        index={1}
+      >
+        <FilterListItem
+          handleChange={handleBrandChange}
+          value="BMW"
+          filterName={brand}
+        />
+        <FilterListItem
+          handleChange={handleBrandChange}
+          value="Audi"
+          filterName={brand}
+        />
+        <FilterListItem
+          handleChange={handleBrandChange}
+          value="Lexus"
+          filterName={brand}
+        />
+        <FilterListItem
+          handleChange={handleBrandChange}
+          value="Mercedes"
+          filterName={brand}
+        />
+        <FilterListItem
+          handleChange={handleBrandChange}
+          value="Honda"
+          filterName={brand}
+        />
+        <FilterListItem
+          handleChange={handleBrandChange}
+          value="Nissan"
+          filterName={brand}
+        />
+        <FilterListItem
+          handleChange={handleBrandChange}
+          value="Ford"
+          filterName={brand}
+        />
+        <FilterListItem
+          handleChange={handleBrandChange}
+          value="Hyundai"
+          filterName={brand}
+        />
+      </FilterItems>
       <Divider />
     </Box>
   );
@@ -156,17 +251,14 @@ const Cars = () => {
               priceRange={priceRange}
             />
             <Divider />
-            {/* dorpdown list  */}
-            {/* <FilterItems
+            {/* filter category  */}
+            <FilterItems
+              dropDownName="Category"
+              drowDownIcon={<Category />}
               handleDropDown={handleFilterDropDwon}
-              open={open}
-              filterName={category}
-              }
-            /> */}
-            {/* dropdownListEnd */}
-            <Divider />
-
-            <FilterItems handleDropDown={handleFilterDropDwon} open={open}>
+              index={0}
+              open={open[0]}
+            >
               <FilterListItem
                 handleChange={handleCategoryChange}
                 value="SUV"
@@ -183,6 +275,73 @@ const Cars = () => {
                 filterName={category}
               />
             </FilterItems>
+            <Divider />
+
+            {/* Filter Brand  */}
+            <FilterItems
+              dropDownName="Brand"
+              drowDownIcon={<BrandingWatermark />}
+              handleDropDown={handleFilterDropDwon}
+              open={open[1]}
+              index={1}
+            >
+              <FilterListItem
+                handleChange={handleBrandChange}
+                value="BMW"
+                filterName={brand}
+              />
+              <FilterListItem
+                handleChange={handleBrandChange}
+                value="Audi"
+                filterName={brand}
+              />
+              <FilterListItem
+                handleChange={handleBrandChange}
+                value="Lexus"
+                filterName={brand}
+              />
+              <FilterListItem
+                handleChange={handleBrandChange}
+                value="Mercedes"
+                filterName={brand}
+              />
+              <FilterListItem
+                handleChange={handleBrandChange}
+                value="Honda"
+                filterName={brand}
+              />
+              <FilterListItem
+                handleChange={handleBrandChange}
+                value="Nissan"
+                filterName={brand}
+              />
+              <FilterListItem
+                handleChange={handleBrandChange}
+                value="Ford"
+                filterName={brand}
+              />
+              <FilterListItem
+                handleChange={handleBrandChange}
+                value="Hyundai"
+                filterName={brand}
+              />
+            </FilterItems>
+
+            {/* filter model */}
+            {/* <FilterItems
+              dropDownName="Model"
+              drowDownIcon={<DirectionsCar/>}
+              handleDropDown={handleFilterDropDwon}
+              open={open[2]}
+              index={2}
+            >
+              <FilterListItem
+                handleChange={handleModelChange}
+                value="Q7"
+                filterName={brand}
+              />
+              
+            </FilterItems> */}
           </Box>
           <Box>
             <div className="filter-pagination-search-container">
