@@ -194,7 +194,7 @@ const Register = () => {
                     animationDuration="0.75"
                   />
                 ) : (
-                  "Submit"
+                  "Register"
                 )}
               </Button>
             </form>

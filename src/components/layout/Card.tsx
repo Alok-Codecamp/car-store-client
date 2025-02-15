@@ -5,6 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import { ICars } from "../../types/carInterface";
 import { Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const ImgMediaCard = (car: any) => {
   const carData = car?.data as ICars;
@@ -15,7 +16,7 @@ const ImgMediaCard = (car: any) => {
         component="img"
         alt="green iguana"
         height="140"
-        image={carData.photoUrl}
+        image={carData?.photoUrl}
       />
       <CardContent>
         <Box
@@ -29,7 +30,7 @@ const ImgMediaCard = (car: any) => {
         >
           <h5
             style={{ textAlign: "left" }}
-          >{`${carData.brand} ${carData.model}`}</h5>
+          >{`${carData?.brand} ${carData?.model}`}</h5>
         </Box>
         <Box
           sx={{
@@ -41,10 +42,8 @@ const ImgMediaCard = (car: any) => {
           }}
         >
           <h5>${carData.price}</h5>
-          <h5 style={{ color: `${carData.quantity > 0 ? "green" : "red"}` }}>
-            {carData.quantity > 0
-              ? `${carData.quantity} In stock`
-              : "Out of Stock"}
+          <h5 style={{ color: `${carData?.inStock ? "green" : "red"}` }}>
+            {carData.inStock ? `${carData?.quantity} In stock` : "Out of Stock"}
           </h5>
         </Box>
         <h6>category:{carData.category}</h6>
@@ -56,9 +55,10 @@ const ImgMediaCard = (car: any) => {
             color: "black",
             ":hover": { backgroundColor: "#ff3b4b", color: "white" },
             fontSize: "12px",
+            marginRight: "auto",
           }}
         >
-          Buy Now
+          <Link to={`/place-order/${carData?._id}`}>Buy Now</Link>
         </Button>
         <Button
           size="small"
@@ -66,9 +66,10 @@ const ImgMediaCard = (car: any) => {
             color: "black",
             fontSize: "12px",
             ":hover": { backgroundColor: "#ff3b4b", color: "white" },
+            marginLeft: "auto",
           }}
         >
-          View Details
+          <Link to={`/cars/${carData?._id}`}>View Details</Link>
         </Button>
       </CardActions>
     </Card>

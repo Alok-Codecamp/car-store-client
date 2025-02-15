@@ -171,7 +171,7 @@ const Login = () => {
                     animationDuration="0.75"
                   />
                 ) : (
-                  "Submit"
+                  "Login"
                 )}
               </Button>
             </form>

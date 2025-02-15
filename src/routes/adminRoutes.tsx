@@ -8,7 +8,7 @@ import Order from "../components/admin/orderManagement/Order";
 
 export const adminRoutes = [
   {
-    path: "user-accounts",
+    path: "all-users",
     element: <UserAccounts />,
   },
   {
@@ -16,11 +16,11 @@ export const adminRoutes = [
     element: <User />,
   },
   {
-    path: "orders",
+    path: "all-orders",
     element: <AllOrders />,
   },
   {
-    path: "order",
+    path: "order-details",
     element: <Order />,
   },
   {

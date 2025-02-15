@@ -61,6 +61,11 @@ input[type="range"]::-moz-range-track {
   margin-left: 10px;
 }
 
+.sub-info span {
+  margin-right: 60px;
+  font-size: 12px;
+}
+
 /* input[type="range"]::-moz-range-thumb {
   background: #ff5733;
   width: 20px;

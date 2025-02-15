@@ -21,26 +21,18 @@ import {
   navItems,
   userDashboardSidebarItems,
 } from "../constants";
-import { ExpandLess, ExpandMore, Logout } from "@mui/icons-material";
+import { Logout } from "@mui/icons-material";
 import { TMenuDropdown } from "../../types/navListItems";
 import { TDecoded } from "../../types/userType";
-import { Collapse } from "@mui/material";
+// import { Collapse } from "@mui/material";
 
 const drawerWidth = 240;
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
-  window?: () => Window;
-}
-
-const Dashboard = (props: Props) => {
-  const { window } = props;
+const Dashboard = () => {
+  // const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-  const [open, setOpen] = React.useState([true, true, true]);
+  // const [open, setOpen] = React.useState([true, true, true]);
   // const handleClick = (index: number) => {
   //   console.log(open[index]);
   //   const updatedOpen = [...open];
@@ -142,9 +134,6 @@ const Dashboard = (props: Props) => {
       <Divider />
     </Box>
   );
-
-  // const container =
-  //   window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>

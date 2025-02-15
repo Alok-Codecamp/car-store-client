@@ -10,6 +10,8 @@ import Dashboard from "../components/layout/Dashboard";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 import { adminRoutes } from "./adminRoutes";
 import { userRoutes } from "./userRoutes";
+import CarDetails from "../pages/cars/CarDetails";
+import PlaceOrder from "../pages/orders/PlaceOrder";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,14 @@ const router = createBrowserRouter([
   {
     path: "/cars",
     element: <Cars />,
+  },
+  {
+    path: "/cars/:id",
+    element: <CarDetails />,
+  },
+  {
+    path: "/place-order/:carId",
+    element: <PlaceOrder />,
   },
   {
     path: "admin/dashboard",

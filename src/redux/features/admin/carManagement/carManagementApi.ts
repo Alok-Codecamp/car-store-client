@@ -35,6 +35,12 @@ const carManagementApi = baseApi.injectEndpoints({
             },
 
         }),
+        getCarById: builder.query({
+            query: (carId: string) => ({
+                url: `/cars/${carId}`,
+                method: 'GET',
+            })
+        }),
         deleteCar: builder.mutation({
             query: (id) => ({
                 url: `/cars/${id}`,
@@ -45,4 +51,9 @@ const carManagementApi = baseApi.injectEndpoints({
 })
 
 
-export const { useAddCarMutation, useGetCarsQuery, useDeleteCarMutation } = carManagementApi;
+export const {
+    useAddCarMutation,
+    useGetCarsQuery,
+    useDeleteCarMutation,
+    useGetCarByIdQuery,
+} = carManagementApi;
