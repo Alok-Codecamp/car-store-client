@@ -23,4 +23,9 @@ const passwordValidationSchema = z.object({
     path: ["confirmPassword"],
 });
 
-export const userDataValidation = { loginDataValidationSchema, registerDataValidationSchema, passwordValidationSchema };
+const forgetPasswordValidatonSchema = z.object({
+
+    email: z.string().min(1, 'Email is required!'),
+
+})
+export const userDataValidation = { loginDataValidationSchema, registerDataValidationSchema, passwordValidationSchema, forgetPasswordValidatonSchema };

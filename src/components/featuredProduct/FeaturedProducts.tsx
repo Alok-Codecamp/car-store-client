@@ -8,10 +8,10 @@ import { ICars } from "../../types/carInterface";
 const FeaturedProducts = () => {
   const { data: cars, isLoading } = useGetCarsQuery([]);
   // console.log("cars:", cars);
-  const allCars = Array.isArray(cars?.data)
-    ? cars?.data?.filter((item: ICars) => item.quantity > 0)
-    : [];
-  const featuredCars = allCars.slice(0, 6);
+  // const allCars = Array.isArray(cars)
+  //   ? cars?.filter((item: ICars) => item.quantity > 0)
+  //   : [];
+  const featuredCars = Array.isArray(cars) && cars?.slice(0, 6);
   return (
     <Box
       sx={{
@@ -57,6 +57,7 @@ const FeaturedProducts = () => {
         ) : (
           <Grid2 container spacing={2}>
             {cars &&
+              Array.isArray(featuredCars) &&
               featuredCars?.map((car: ICars, index: number) => (
                 <Grid2 key={index} size={{ xs: 12, sm: 6, md: 4, lg: 2 }}>
                   <ImgMediaCard data={car} />

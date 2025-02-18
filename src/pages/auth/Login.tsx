@@ -22,6 +22,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+
   const [login, { error, isLoading }] = useLoginMutation();
   console.log(error);
   const dispatch = useAppDispatch();
@@ -57,6 +58,7 @@ const Login = () => {
       });
     }
   };
+
   return (
     <>
       <NavBar />
@@ -145,15 +147,16 @@ const Login = () => {
                   <VisibilityOff sx={{ color: "white" }} />
                 )}
               </button>
+
               <br />
 
               <Button
                 sx={{
                   color: "whitesmoke",
                   border: "2px solid white",
-                  marginTop: "10px",
                   paddingLeft: "30px",
                   paddingRight: "30px",
+                  marginBottom: "20px",
                   backgroundColor: "rgba(0,0,0,0.6)",
                   ":hover": {
                     backgroundColor: "#ff3b4b",
@@ -175,6 +178,9 @@ const Login = () => {
                 )}
               </Button>
             </form>
+            <Link style={{ color: "white" }} to="/forget-password">
+              Forget Password?
+            </Link>
           </Box>
         </Box>
       </Box>

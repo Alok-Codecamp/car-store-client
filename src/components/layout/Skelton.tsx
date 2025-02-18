@@ -25,6 +25,20 @@ const data = [
     views: "130M views",
     createdAt: "10 months ago",
   },
+  {
+    src: "https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw",
+    title: "Calvin Harris, Sam Smith - Promises (Official Video)",
+    channel: "Calvin Harris",
+    views: "130M views",
+    createdAt: "10 months ago",
+  },
+  {
+    src: "https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw",
+    title: "Calvin Harris, Sam Smith - Promises (Official Video)",
+    channel: "Calvin Harris",
+    views: "130M views",
+    createdAt: "10 months ago",
+  },
 ];
 
 interface MediaProps {
@@ -36,7 +50,7 @@ function Media(props: MediaProps) {
 
   return (
     <Grid container wrap="nowrap">
-      {(loading ? Array.from(new Array(3)) : data).map((item, index) => (
+      {(loading ? Array.from(new Array(6)) : data).map((item, index) => (
         <Box key={index} sx={{ width: 210, marginRight: 0.5, my: 5 }}>
           {item ? (
             <img
@@ -78,7 +92,6 @@ const FeaturedSkelton = () => {
   return (
     <Box sx={{ overflow: "hidden" }}>
       <Media loading />
-      {/* <Media /> */}
     </Box>
   );
 };

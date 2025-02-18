@@ -12,6 +12,8 @@ import { adminRoutes } from "./adminRoutes";
 import { userRoutes } from "./userRoutes";
 import CarDetails from "../pages/cars/CarDetails";
 import PlaceOrder from "../pages/orders/PlaceOrder";
+import ResetPassword from "../pages/auth/ResetPassword";
+import ForgetPassword from "../pages/auth/ForgetPassword";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +69,14 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/forget-password",
+    element: <ForgetPassword />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
   },
 ]);
 
