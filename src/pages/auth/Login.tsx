@@ -24,7 +24,6 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [login, { error, isLoading }] = useLoginMutation();
-  console.log(error);
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectCurrentUser);
   const navigate = useNavigate();
@@ -46,11 +45,15 @@ const Login = () => {
 
     try {
       const token = await login(userInfo).unwrap();
-      const verifyUser = verifyToken(token.data.data) as TDecoded;
-      console.log(verifyUser);
-      dispatch(setUser({ user: verifyUser, token: token.data.data }));
+      // verify user token
+      const verifyUser = verifyToken(token.data) as TDecoded;
+      // set user to local storage
+      if (verifyUser) {
+        dispatch(setUser({ user: verifyUser, token: token.data }));
+      }
+      // toast for succesfull login
       toast.success("Login successfully", { id: toastId });
-
+      // redirect after login
       navigate(`/${verifyUser?.role}/dashboard`);
     } catch (error: any) {
       toast.error(error?.message || `login Faild ! ${error?.message}`, {

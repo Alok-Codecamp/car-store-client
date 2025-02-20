@@ -28,4 +28,13 @@ const forgetPasswordValidatonSchema = z.object({
     email: z.string().min(1, 'Email is required!'),
 
 })
-export const userDataValidation = { loginDataValidationSchema, registerDataValidationSchema, passwordValidationSchema, forgetPasswordValidatonSchema };
+
+const resetPasswordValidationSchema = z.object({
+    newPassword: z.string({ required_error: 'new password is required' }).min(6, 'minimum 6 charecter'),
+    confirmPassword: z.string({ required_error: 'confirm password is required' }).min(6, 'minimum 6 charecter')
+}).refine((data) => data.newPassword === data.confirmPassword, {
+    message: "New password and confirm password must match",
+    path: ["confirmPassword"],
+});
+
+export const userDataValidation = { loginDataValidationSchema, registerDataValidationSchema, passwordValidationSchema, forgetPasswordValidatonSchema, resetPasswordValidationSchema };

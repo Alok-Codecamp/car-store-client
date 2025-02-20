@@ -11,40 +11,45 @@ import { RotatingLines } from "react-loader-spinner";
 import "./user.css";
 import { useEffect } from "react";
 import { toast } from "sonner";
+
 const EditProfile = () => {
   const user = useAppSelector(selectCurrentUser) as TUser;
   const { data: myData, isSuccess } = useMyAccountQuery(user.email);
-  const formData = myData?.data?.data;
+  console.log(myData);
+  const formData = myData?.data;
   const [updateUser, { isLoading, error }] = useUpdateMyAccountMutation();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<{ name: string; email: string; address: string }>({
+  } = useForm<{ name: string; address: string }>({
     defaultValues: myData?.data,
   });
   useEffect(() => {
     if (myData?.data) {
       reset({
-        name: formData.name || "",
-        address: formData.address || "",
+        name: formData?.name || "",
+        address: formData?.address || "",
       });
     }
   }, [isSuccess, reset]);
-  const onSubmit = async (data: { name: string; email: string }) => {
+  const onSubmit = async (data: { name: string; address: string }) => {
     const toastId = toast.loading("Data updating...");
     if (data.name === "") {
       data.name = formData.name;
     }
-    if (data.email === "") {
-      data.email = formData.email;
+    if (data.address === "") {
+      data.address = formData?.address;
     }
     try {
-      const result = await updateUser({ email: formData?.email, data });
-      const updatedData = result?.data?.data?.data;
+      const newData = { email: formData?.email, data };
+      const result = await updateUser(newData);
+      console.log(result);
+      const updatedData = result?.data;
       if (updatedData) {
         toast.success("user data updated", { id: toastId });
+        toast.dismiss(toastId);
       } else {
         toast.error(error?.data?.message || "updating faild");
       }

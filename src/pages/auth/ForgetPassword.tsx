@@ -11,9 +11,14 @@ import { userDataValidation } from "./authDataValidation";
 import { ArrowBack } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useForgetPasswordMutation } from "../../redux/features/auth/authApi";
+import { useState } from "react";
 
 const ForgetPassword = () => {
+  const [forgetPasswordResponse, setforgetPasswordResponse] = useState<
+    Record<string, unknown>
+  >({});
   const [forgetPassword, { isLoading, error }] = useForgetPasswordMutation();
+  // console.log(error, isLoading);
   const {
     register,
     handleSubmit,
@@ -23,7 +28,10 @@ const ForgetPassword = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log("data", data);
+    const res = await forgetPassword(data);
+    if (res) {
+      setforgetPasswordResponse(res);
+    }
   };
 
   return (
@@ -68,9 +76,17 @@ const ForgetPassword = () => {
               </span>{" "}
             </Link>
             <h4 style={{ color: "white" }}>Forgot your password?</h4>
-            <p style={{ color: "white" }}>
-              Please enter the account for which you want to reset the password.
-            </p>
+            {forgetPasswordResponse ? (
+              <p style={{ color: "white", width: "200px" }}>
+                {forgetPasswordResponse?.data?.message ||
+                  forgetPasswordResponse?.error?.data?.message}
+              </p>
+            ) : (
+              <p style={{ color: "white", width: "200px" }}>
+                Please enter the account for which you want to reset the
+                password.
+              </p>
+            )}
 
             {/* <h3 className="error-text">{error ? error?.data?.message : " "}</h3> */}
             <form
@@ -97,7 +113,7 @@ const ForgetPassword = () => {
                     backgroundColor: "#ff3b4b",
                   },
                 }}
-                // disabled={user ? true : false}
+                disabled={forgetPasswordResponse.data ? true : false}
                 type="submit"
                 className="submit-button"
               >
@@ -109,7 +125,7 @@ const ForgetPassword = () => {
                     animationDuration="0.75"
                   />
                 ) : (
-                  "Forget"
+                  "Forget Password"
                 )}
               </Button>
             </form>
