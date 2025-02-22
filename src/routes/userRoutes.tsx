@@ -1,7 +1,8 @@
 import ChangePassword from "../components/user/ChangePassword";
 import EditProfile from "../components/user/EditProfile";
 import MyAccount from "../components/user/MyAccount";
-import MyOrders from "../components/user/MyOrders";
+
+import OrderDetails from "../pages/orders/OrderDetails";
 
 export const userRoutes = [
   {
@@ -9,8 +10,8 @@ export const userRoutes = [
     element: <MyAccount />,
   },
   {
-    path: "my-orders",
-    element: <MyOrders />,
+    path: "order-details",
+    element: <OrderDetails />,
   },
   {
     path: "profile-settings/edit-profile",

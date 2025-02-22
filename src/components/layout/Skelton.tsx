@@ -11,46 +11,19 @@ const data = [
     views: "396k views",
     createdAt: "a week ago",
   },
-  {
-    src: "https://i.ytimg.com/vi/_Uu12zY01ts/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCpX6Jan2rxrCAZxJYDXppTP4MoQA",
-    title: "Queen - Greatest Hits",
-    channel: "Queen Official",
-    views: "40M views",
-    createdAt: "3 years ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw",
-    title: "Calvin Harris, Sam Smith - Promises (Official Video)",
-    channel: "Calvin Harris",
-    views: "130M views",
-    createdAt: "10 months ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw",
-    title: "Calvin Harris, Sam Smith - Promises (Official Video)",
-    channel: "Calvin Harris",
-    views: "130M views",
-    createdAt: "10 months ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw",
-    title: "Calvin Harris, Sam Smith - Promises (Official Video)",
-    channel: "Calvin Harris",
-    views: "130M views",
-    createdAt: "10 months ago",
-  },
 ];
 
 interface MediaProps {
   loading?: boolean;
+  quantity: number;
 }
 
 function Media(props: MediaProps) {
-  const { loading = false } = props;
+  const { loading = false, quantity } = props;
 
   return (
     <Grid container wrap="nowrap">
-      {(loading ? Array.from(new Array(6)) : data).map((item, index) => (
+      {(loading ? Array.from(new Array(quantity)) : data).map((item, index) => (
         <Box key={index} sx={{ width: 210, marginRight: 0.5, my: 5 }}>
           {item ? (
             <img
@@ -88,10 +61,10 @@ function Media(props: MediaProps) {
   );
 }
 
-const FeaturedSkelton = () => {
+const FeaturedSkelton = ({ quantity }: MediaProps) => {
   return (
     <Box sx={{ overflow: "hidden" }}>
-      <Media loading />
+      <Media loading quantity={quantity} />
     </Box>
   );
 };

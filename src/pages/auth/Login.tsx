@@ -26,6 +26,7 @@ const Login = () => {
   const [login, { error, isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectCurrentUser);
+  console.log(user);
   const navigate = useNavigate();
   const {
     register,
@@ -45,6 +46,7 @@ const Login = () => {
 
     try {
       const token = await login(userInfo).unwrap();
+      console.log(token.data);
       // verify user token
       const verifyUser = verifyToken(token.data) as TDecoded;
       // set user to local storage

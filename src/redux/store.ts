@@ -13,7 +13,7 @@ import {
 } from "redux-persist";
 import authReduser from './features/auth/authSlice';
 import storage from "redux-persist/lib/storage";
-
+import orderReduser from './features/admin/orderManagement/orderSlice'
 const persistConfig = {
     key: "auth",
     storage,
@@ -25,6 +25,7 @@ export const store = configureStore({
         [baseApi.reducerPath]: baseApi.reducer,
         auth: persistedAuthReduser,
 
+        order: orderReduser,
     },
     middleware: (getDefaultMiddlewares) => getDefaultMiddlewares({
         serializableCheck: {

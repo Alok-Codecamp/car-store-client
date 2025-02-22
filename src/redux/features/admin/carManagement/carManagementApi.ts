@@ -19,8 +19,7 @@ const carManagementApi = baseApi.injectEndpoints({
 
                 if (args) {
                     args.forEach((item) => {
-                        const value = typeof item.value === "object" ? JSON.stringify(item.value) : item.value
-
+                        const value = item.value
                         params.append(item.name, value as string);
                     })
                 }

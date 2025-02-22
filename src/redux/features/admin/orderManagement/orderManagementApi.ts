@@ -17,9 +17,17 @@ const orderManagementApi = baseApi.injectEndpoints({
                 url: '/orders',
                 method: 'GET',
             })
+        }),
+        verifyPayment: builder.query({
+            query: (order_id) => ({
+                url: '/orders/verify-payment',
+                params: { order_id },
+                method: 'GET',
+
+            })
         })
     })
 })
 
 
-export const { useCreateOrderMutation, useGetOrdersQuery } = orderManagementApi;
+export const { useCreateOrderMutation, useGetOrdersQuery, useVerifyPaymentQuery } = orderManagementApi;

@@ -53,7 +53,7 @@ const FeaturedProducts = () => {
         }}
       >
         {isLoading ? (
-          <FeaturedSkelton />
+          <FeaturedSkelton quantity={6} />
         ) : (
           <Grid2 container spacing={2}>
             {cars &&

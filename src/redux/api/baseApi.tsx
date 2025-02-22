@@ -29,13 +29,18 @@ const BaseQueryWithRefreshToken: BaseQueryFn<
 > = async (args, api, extraOtions): Promise<any> => {
   let result = await baseQuery(args, api, extraOtions);
 
-  if (result.error?.status === 500) {
+  if (
+    result.error?.status === 500 &&
+    result?.error?.data?.message === "jwt expired"
+  ) {
+    console.log(result);
+    // car-store-express-app.vercel.app
     const res = await fetch("http://localhost:5000/api/auth/refresh-token", {
       method: "POST",
       credentials: "include",
     });
     const data = await res.json();
-
+    console.log(data);
     if (data?.data?.accessToken) {
       const user = (api.getState() as RootState).auth.user;
       console.log(user);
@@ -48,6 +53,7 @@ const BaseQueryWithRefreshToken: BaseQueryFn<
 
       result = await baseQuery(args, api, extraOtions);
     } else {
+      console.log(data);
       api.dispatch(logOut());
     }
   }

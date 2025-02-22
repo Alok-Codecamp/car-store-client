@@ -3,20 +3,19 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
-import { ICars } from "../../types/carInterface";
+// import { ICars } from "../../types/carInterface";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const ImgMediaCard = (car: any) => {
-  const carData = car?.data as ICars;
-
+  // console.log(car.data);
   return (
     <Card sx={{ maxWidth: 460 }}>
       <CardMedia
         component="img"
         alt="green iguana"
         height="140"
-        image={carData?.photoUrl}
+        image={car.data?.photoUrl}
       />
       <CardContent>
         <Box
@@ -30,7 +29,7 @@ const ImgMediaCard = (car: any) => {
         >
           <h5
             style={{ textAlign: "left" }}
-          >{`${carData?.brand} ${carData?.model}`}</h5>
+          >{`${car.data?.brand} ${car.data?.model}`}</h5>
         </Box>
         <Box
           sx={{
@@ -41,12 +40,14 @@ const ImgMediaCard = (car: any) => {
             color: "black",
           }}
         >
-          <h5>${carData.price}</h5>
-          <h5 style={{ color: `${carData?.inStock ? "green" : "red"}` }}>
-            {carData.inStock ? `${carData?.quantity} In stock` : "Out of Stock"}
+          <h5>${car.data.price}</h5>
+          <h5 style={{ color: `${car.data?.inStock ? "green" : "red"}` }}>
+            {car.data.inStock
+              ? `${car.data?.quantity} In stock`
+              : "Out of Stock"}
           </h5>
         </Box>
-        <h6>category:{carData.category}</h6>
+        <h6>category:{car.data.category}</h6>
       </CardContent>
       <CardActions>
         <Button
@@ -58,7 +59,7 @@ const ImgMediaCard = (car: any) => {
             marginRight: "auto",
           }}
         >
-          <Link to={`/place-order/${carData?._id}`}>Buy Now</Link>
+          <Link to={`/place-order/${car.data?._id}`}>Buy Now</Link>
         </Button>
         <Button
           size="small"
@@ -69,7 +70,7 @@ const ImgMediaCard = (car: any) => {
             marginLeft: "auto",
           }}
         >
-          <Link to={`/cars/${carData?._id}`}>View Details</Link>
+          <Link to={`/cars/${car.data?._id}`}>View Details</Link>
         </Button>
       </CardActions>
     </Card>

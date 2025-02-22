@@ -34,8 +34,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/place-order/:carId",
-    element: <PlaceOrder />,
+    element: (
+      <ProtectedRoute>
+        <PlaceOrder />
+      </ProtectedRoute>
+    ),
   },
+
   {
     path: "admin/dashboard",
     element: (

@@ -10,27 +10,29 @@ import {
 } from "@mui/material";
 import React, { ReactNode } from "react";
 import "./Cars.css";
-export type TRange = {
-  minPrice: number;
-  maxPrice: number;
-};
 
 interface FilterItemsProps {
-  setPriceRange: (value: (prev: TRange) => TRange) => void;
-
-  priceRange: TRange;
+  setMinPrice: (value: number) => void;
+  minPrice: number;
+  setMaxPrice: (value: number) => void;
+  maxprice: number;
 }
 
 export const FilterPriceRange: React.FC<FilterItemsProps> = ({
-  setPriceRange,
-  priceRange,
+  setMinPrice,
+  minPrice,
+  setMaxPrice,
+  maxprice,
 }) => {
-  const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMinPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
-    const name = e.target.name as keyof TRange;
-    setPriceRange((prev: TRange) => ({ ...prev, [name]: value }));
+    setMinPrice(value);
   };
-  console.log(priceRange);
+  const handleMaxPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    setMaxPrice(value);
+  };
+
   return (
     <Box
       sx={{
@@ -42,12 +44,12 @@ export const FilterPriceRange: React.FC<FilterItemsProps> = ({
     >
       <h4 style={{ lineHeight: "0px" }}>Price Range</h4>
       <input
-        defaultValue={"10000"}
+        defaultValue={minPrice}
         type="range"
-        min={"10000"}
+        min={"0"}
         max={"40000"}
         name="minPrice"
-        onChange={handleRangeChange}
+        onChange={handleMinPrice}
         style={{
           width: "100px",
           height: "40px",
@@ -55,12 +57,12 @@ export const FilterPriceRange: React.FC<FilterItemsProps> = ({
         }}
       />
       <input
-        defaultValue={"50000"}
+        defaultValue={maxprice}
         type="range"
         min={"50000"}
         max={"99000"}
         name="maxPrice"
-        onChange={handleRangeChange}
+        onChange={handleMaxPrice}
         style={{
           width: "100px",
           height: "40px",
@@ -83,7 +85,7 @@ export const FilterPriceRange: React.FC<FilterItemsProps> = ({
             borderRadius: "2px",
           }}
         >
-          ${priceRange.minPrice}
+          ${minPrice}
         </span>
         <span
           style={{
@@ -94,7 +96,7 @@ export const FilterPriceRange: React.FC<FilterItemsProps> = ({
             borderRadius: "2px",
           }}
         >
-          ${priceRange.maxPrice}
+          ${maxprice}
         </span>
       </Box>
     </Box>
@@ -189,7 +191,6 @@ export const FilterListItem = ({
   value,
   handleChange,
 }: TFilterListItemProps) => {
-  console.log(value, filterName);
   return (
     <ListItemButton
       sx={{ pl: 8 }}
@@ -248,7 +249,6 @@ export const FilterItems = ({
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {/* category suv */}
           {children}
         </List>
       </Collapse>

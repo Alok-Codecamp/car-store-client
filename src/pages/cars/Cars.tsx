@@ -27,10 +27,8 @@ type Anchor = "right";
 const Cars = () => {
   const [open, setOpen] = useState([true, true, true]);
   const [state, setState] = useState({ right: false });
-  const [priceRange, setPriceRange] = useState({
-    minPrice: 10000,
-    maxPrice: 99000,
-  });
+  const [minPrice, setMinPrice] = useState(10000);
+  const [maxPrice, setMaxPrice] = useState(99000);
   const [limit, setLimit] = useState("10");
   const [sortBy, setSortBy] = useState("Default");
   const [sort, setSort] = useState("-price");
@@ -46,18 +44,18 @@ const Cars = () => {
     return [
       { name: "limit", value: limit },
       { name: "sort", value: sort },
-      {
-        name: "price",
-        value: { min: priceRange.minPrice, max: priceRange.maxPrice },
-      },
+      { name: "minPrice", value: minPrice },
+      { name: "maxPrice", value: maxPrice },
+
       { name: "search", value: search },
       ...category.map((item) => ({ name: "category", value: item })),
       ...brand.map((item) => ({ name: "brand", value: item })),
     ];
-  }, [sort, priceRange, search, category, limit, brand]);
+  }, [sort, minPrice, maxPrice, search, category, limit, brand]);
 
   // Get car query
-  const { data: cars, isLoading } = useGetCarsQuery(queryArray);
+  const { data: cars, isLoading, error } = useGetCarsQuery(queryArray);
+  console.log(cars, error);
   // get location for breadCrumbs
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
@@ -101,13 +99,6 @@ const Cars = () => {
       checked ? [...prev, value] : prev.filter((item) => item !== value)
     );
   };
-  // handle model change
-  // const handleModelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { value, checked } = e.target;
-  //   setModel((prev) =>
-  //     checked ? [...prev, value] : prev.filter((item) => item !== value)
-  //   );
-  // };
 
   const handleFilterDropDwon = (index: number) => {
     setOpen((prev) => {
@@ -117,16 +108,19 @@ const Cars = () => {
     });
   };
 
-  console.log(category);
-
   const list = () => (
     <Box
-      sx={{ width: 300 }}
+      sx={{ width: 280 }}
       role="presentation"
       onClick={(e) => e.stopPropagation()}
       onKeyDown={(e) => e.stopPropagation()}
     >
-      <FilterPriceRange setPriceRange={setPriceRange} priceRange={priceRange} />
+      <FilterPriceRange
+        setMinPrice={setMinPrice}
+        setMaxPrice={setMaxPrice}
+        minPrice={minPrice}
+        maxprice={maxPrice}
+      />
       {/* filter category  */}
       <Divider />
       <FilterItems
@@ -247,8 +241,10 @@ const Cars = () => {
             }}
           >
             <FilterPriceRange
-              setPriceRange={setPriceRange}
-              priceRange={priceRange}
+              setMinPrice={setMinPrice}
+              setMaxPrice={setMaxPrice}
+              minPrice={minPrice}
+              maxprice={maxPrice}
             />
             <Divider />
             {/* filter category  */}
@@ -326,22 +322,6 @@ const Cars = () => {
                 filterName={brand}
               />
             </FilterItems>
-
-            {/* filter model */}
-            {/* <FilterItems
-              dropDownName="Model"
-              drowDownIcon={<DirectionsCar/>}
-              handleDropDown={handleFilterDropDwon}
-              open={open[2]}
-              index={2}
-            >
-              <FilterListItem
-                handleChange={handleModelChange}
-                value="Q7"
-                filterName={brand}
-              />
-              
-            </FilterItems> */}
           </Box>
           <Box>
             <div className="filter-pagination-search-container">
@@ -429,12 +409,11 @@ const Cars = () => {
             >
               <h2>Your perfect ride is just a click away!</h2>
               {isLoading ? (
-                <FeaturedSkelton />
+                <FeaturedSkelton quantity={4} />
               ) : (
                 <Grid2 container spacing={2}>
-                  {cars &&
-                    Array.isArray(cars.data) &&
-                    cars?.data.map((car: ICars, index: number) => (
+                  {Array.isArray(cars) &&
+                    cars?.map((car: ICars, index: number) => (
                       <Grid2 key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
                         <ImgMediaCard data={car} />
                       </Grid2>
