@@ -1,6 +1,6 @@
 import { Box, Breadcrumbs, Button } from "@mui/material";
 import NavBar from "../../components/navBar/NavBar";
-import { data, Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import { Home } from "@mui/icons-material";
 import { useGetCarByIdQuery } from "../../redux/features/admin/carManagement/carManagementApi";
@@ -45,7 +45,9 @@ const PlaceOrder = () => {
       window.location.href = createOrderRes?.data?.data?.payment?.checkout_url;
     }
     if (createOrderRes.error) {
-      toast.error(createOrderRes?.error?.data || "faild to place order");
+      toast.error(
+        (createOrderRes?.error as any)?.data || "faild to place order"
+      );
     }
   };
 

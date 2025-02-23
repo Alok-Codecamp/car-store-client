@@ -17,7 +17,7 @@ const ForgetPassword = () => {
   const [forgetPasswordResponse, setforgetPasswordResponse] = useState<
     Record<string, unknown>
   >({});
-  const [forgetPassword, { isLoading, error }] = useForgetPasswordMutation();
+  const [forgetPassword, { isLoading }] = useForgetPasswordMutation();
   // console.log(error, isLoading);
   const {
     register,
@@ -78,8 +78,8 @@ const ForgetPassword = () => {
             <h4 style={{ color: "white" }}>Forgot your password?</h4>
             {forgetPasswordResponse ? (
               <p style={{ color: "white", width: "200px" }}>
-                {forgetPasswordResponse?.data?.message ||
-                  forgetPasswordResponse?.error?.data?.message}
+                {(forgetPasswordResponse?.data as any)?.message ||
+                  (forgetPasswordResponse?.error as any)?.data?.message}
               </p>
             ) : (
               <p style={{ color: "white", width: "200px" }}>
