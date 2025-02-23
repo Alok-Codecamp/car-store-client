@@ -14,6 +14,7 @@ import CarDetails from "../pages/cars/CarDetails";
 import PlaceOrder from "../pages/orders/PlaceOrder";
 import ResetPassword from "../pages/auth/ResetPassword";
 import ForgetPassword from "../pages/auth/ForgetPassword";
+import OrderDetails from "../pages/orders/OrderDetails";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <PlaceOrder />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "order-details",
+    element: (
+      <ProtectedRoute>
+        <OrderDetails />
       </ProtectedRoute>
     ),
   },

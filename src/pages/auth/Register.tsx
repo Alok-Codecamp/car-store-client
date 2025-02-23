@@ -26,9 +26,7 @@ const Register = () => {
   const dispatch = useAppDispatch();
 
   const [registerUser, { data, error, isLoading }] = useRegisterUserMutation();
-  const errorMessage =
-    (error && (error as any)?.data?.message) || "somethin went wrong";
-  console.log(data, error);
+  const errorMessage = error && (error as any)?.data?.message;
 
   const [login] = useLoginMutation();
 
@@ -44,18 +42,19 @@ const Register = () => {
 
   //form submit handler function
   const onSubmit: SubmitHandler<FieldValues> = async (formData) => {
-    console.log("data", data);
     const toastId = toast.loading("register user...");
     try {
       const result = await registerUser(formData);
-      const savedData = result?.data?.data?.data;
+
+      const savedData = result?.data?.data;
+
       if (savedData) {
         const userInfo = {
           email: formData.email,
           password: formData.password,
         };
         const token = await login(userInfo).unwrap();
-        const verifyUser = verifyToken(token.data.data);
+        const verifyUser = verifyToken(token?.data);
         console.log(verifyUser, token);
         dispatch(setUser({ user: verifyUser, token: token.data.data }));
         toast.success("registration successfully", { id: toastId });

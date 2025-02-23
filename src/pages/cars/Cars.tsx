@@ -1,6 +1,13 @@
 import NavBar from "../../components/navBar/NavBar";
 import { useGetCarsQuery } from "../../redux/features/admin/carManagement/carManagementApi";
-import { Box, Breadcrumbs, Button, Divider, Grid2 } from "@mui/material";
+import {
+  Box,
+  Breadcrumbs,
+  Button,
+  Divider,
+  Grid2,
+  Typography,
+} from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import {
   BrandingWatermark,
@@ -35,7 +42,7 @@ const Cars = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string[]>([]);
   const [brand, setBrand] = useState<string[]>([]);
-
+  const [inStock, setInstock] = useState(true);
   // set sort value based on selected sort
   useEffect(() => {
     setSort(sortBy === "Price(Low>High)" ? "price" : "-price");
@@ -46,12 +53,12 @@ const Cars = () => {
       { name: "sort", value: sort },
       { name: "minPrice", value: minPrice },
       { name: "maxPrice", value: maxPrice },
-
+      { name: "inStock", value: inStock },
       { name: "search", value: search },
       ...category.map((item) => ({ name: "category", value: item })),
       ...brand.map((item) => ({ name: "brand", value: item })),
     ];
-  }, [sort, minPrice, maxPrice, search, category, limit, brand]);
+  }, [sort, minPrice, maxPrice, search, category, limit, brand, inStock]);
 
   // Get car query
   const { data: cars, isLoading, error } = useGetCarsQuery(queryArray);
@@ -98,6 +105,11 @@ const Cars = () => {
     setBrand((prev) =>
       checked ? [...prev, value] : prev.filter((item) => item !== value)
     );
+  };
+  //handle availablity
+  const handleInStockChange = () => {
+    console.log(inStock);
+    setInstock(!inStock);
   };
 
   const handleFilterDropDwon = (index: number) => {
@@ -198,6 +210,28 @@ const Cars = () => {
         />
       </FilterItems>
       <Divider />
+      <FilterItems
+        dropDownName="Category"
+        drowDownIcon={<Category />}
+        handleDropDown={handleFilterDropDwon}
+        index={0}
+        open={open[0]}
+      >
+        <Box>
+          <input
+            style={{
+              width: "20px",
+              marginLeft: "62px",
+            }}
+            type="checkbox"
+            onChange={handleInStockChange}
+            readOnly
+            checked={inStock}
+            value={"instock"}
+          />
+          <span style={{ fontSize: "14px" }}>In stock</span>
+        </Box>
+      </FilterItems>
     </Box>
   );
 
@@ -321,6 +355,29 @@ const Cars = () => {
                 value="Hyundai"
                 filterName={brand}
               />
+            </FilterItems>
+            <Divider />
+            <FilterItems
+              dropDownName="Category"
+              drowDownIcon={<Category />}
+              handleDropDown={handleFilterDropDwon}
+              index={0}
+              open={open[0]}
+            >
+              <Box>
+                <input
+                  style={{
+                    width: "20px",
+                    marginLeft: "62px",
+                  }}
+                  type="checkbox"
+                  onChange={handleInStockChange}
+                  readOnly
+                  checked={inStock}
+                  value={"instock"}
+                />
+                <span style={{ fontSize: "14px" }}>In stock</span>
+              </Box>
             </FilterItems>
           </Box>
           <Box>

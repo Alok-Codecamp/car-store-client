@@ -20,9 +20,6 @@ const ImgMediaCard = (car: any) => {
       <CardContent>
         <Box
           sx={{
-            // display: "flex",
-            // justifyContent: "space-between",
-            // alignItems: "center",
             textAlign: "left",
             lineHeight: "1px",
           }}
@@ -47,7 +44,7 @@ const ImgMediaCard = (car: any) => {
               : "Out of Stock"}
           </h5>
         </Box>
-        <h6>category:{car.data.category}</h6>
+        <h6 style={{ textAlign: "left" }}>category:{car.data.category}</h6>
       </CardContent>
       <CardActions>
         <Button

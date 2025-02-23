@@ -1,4 +1,12 @@
-import { Box, Breadcrumbs, Button } from "@mui/material";
+import {
+  Box,
+  Breadcrumbs,
+  Button,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import NavBar from "../../components/navBar/NavBar";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
@@ -17,8 +25,13 @@ import FeaturedSkelton from "../../components/layout/Skelton";
 import { useCreateOrderMutation } from "../../redux/features/admin/orderManagement/orderManagementApi";
 import { toast } from "sonner";
 import { RotatingLines } from "react-loader-spinner";
+import { useForm } from "react-hook-form";
+import { selectCurrentUser } from "../../redux/features/auth/authSlice";
+import { TUser } from "../../redux/features/user/accountManagementApi";
 
 const PlaceOrder = () => {
+  const userInfo = useAppSelector(selectCurrentUser) as TUser;
+  // const { data: userData } = useMyAccountQuery(userInfo?.email);
   const dispatch = useAppDispatch();
   const { carId } = useParams();
   const { data: carData, isFetching } = useGetCarByIdQuery(carId as string);
@@ -27,18 +40,34 @@ const PlaceOrder = () => {
   const totalPrice = useAppSelector(selectTotalPrice);
   const [createOrder, { isLoading }] = useCreateOrderMutation();
   const handleQunatityIncrement = () => {
-    dispatch(incraseQuantity());
-    dispatch(countTotalPrice(car.price));
+    if (quantity < car?.quantity) {
+      dispatch(incraseQuantity());
+      dispatch(countTotalPrice(car.price));
+    } else {
+      alert("Ordered quantity does not exceed the Car stock");
+    }
   };
   const handleQuantityDecrement = () => {
-    dispatch(decraseQuantity());
-    dispatch(countTotalPrice(car.price));
+    if (quantity > 1) {
+      dispatch(decraseQuantity());
+      dispatch(countTotalPrice(car.price));
+    } else {
+      alert("Ordered quantity does not less then the 1");
+    }
   };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handlePlaceOrder = async () => {
+  const handlePlaceOrder = async (data: any) => {
+    console.log(data);
+
     const toastId = toast.loading("please wait! order processing!");
-    const cars = [{ car: car._id, quantity }];
+    const cars = [{ car: car._id, quantity, shippingAddress: data.city }];
     const createOrderRes = await createOrder({ cars });
+    console.log(createOrderRes);
     if (createOrderRes.data) {
       console.log(createOrderRes?.data?.data?.payment);
       toast.success("order placed!", { id: toastId });
@@ -128,7 +157,8 @@ const PlaceOrder = () => {
             >
               <span>Price:{car?.price}</span>
               <span style={{ color: `${car?.inStock ? "green" : "red"}` }}>
-                Status:{car?.inStock ? "In stock" : "out of stock"}
+                Status:
+                {car?.inStock ? `${car?.quantity}In stock` : "out of stock"}
               </span>
               <span>Brand:{car?.brand}</span>
             </Box>
@@ -162,32 +192,81 @@ const PlaceOrder = () => {
                 <Button onClick={handleQunatityIncrement}>+</Button>
               </Box>
             </Box>
+            <Box textAlign="center">
+              <Typography textAlign="left" fontWeight="600">
+                User Info
+              </Typography>
 
-            <Button
-              onClick={handlePlaceOrder}
-              size="small"
-              sx={{
-                backgroundColor: "whitesmoke",
-                boxShadow: "0px 0px 0px 1px lightgray",
-                border: "white",
-                color: "black",
-                ":hover": { backgroundColor: "#ff3b4b", color: "white" },
-                fontSize: "12px",
-                marginRight: "auto",
-                width: { lg: "200px", md: "160px" },
-              }}
-            >
-              {isLoading ? (
-                <RotatingLines
-                  width="20"
-                  strokeWidth="2"
-                  strokeColor="white"
-                  animationDuration="0.75"
-                />
-              ) : (
-                "Place Order"
-              )}
-            </Button>
+              <form onSubmit={handleSubmit(handlePlaceOrder)}>
+                <Box>
+                  {/* user contact  */}
+                  <TextField
+                    sx={{
+                      marginRight: "10px",
+                    }}
+                    {...register("address", {
+                      required: "address is required",
+                    })}
+                    placeholder="Address"
+                  />
+
+                  <TextField
+                    {...register("city", { required: "City is required" })}
+                    placeholder="City"
+                  />
+                </Box>
+                <Box mt={2}>
+                  {/* user contact  */}
+                  <TextField
+                    sx={{
+                      marginRight: "10px",
+                    }}
+                    {...register("email")}
+                    value={userInfo.email}
+                    placeholder="Email"
+                  />
+
+                  <Select
+                    {...register("paymentMethod")}
+                    sx={{
+                      width: "48%",
+                    }}
+                    defaultValue="Mobile Banking"
+                  >
+                    <MenuItem value="Mobile Banking">Mobile Banking</MenuItem>
+                    <MenuItem value="Bank Account">Bank Account</MenuItem>
+                    <MenuItem value="Credit Card">Credit Card</MenuItem>
+                  </Select>
+                </Box>
+                <Button
+                  type="submit"
+                  size="small"
+                  sx={{
+                    backgroundColor: "whitesmoke",
+                    boxShadow: "0px 0px 0px 1px lightgray",
+                    border: "white",
+                    color: "black",
+                    ":hover": { backgroundColor: "#ff3b4b", color: "white" },
+                    fontSize: "12px",
+                    marginRight: "auto",
+                    width: { lg: "200px", md: "160px" },
+                    height: "40px",
+                    marginTop: "20px",
+                  }}
+                >
+                  {isLoading ? (
+                    <RotatingLines
+                      width="20"
+                      strokeWidth="2"
+                      strokeColor="white"
+                      animationDuration="0.75"
+                    />
+                  ) : (
+                    "Place Order"
+                  )}
+                </Button>
+              </form>
+            </Box>
           </Box>
         </Box>
       )}

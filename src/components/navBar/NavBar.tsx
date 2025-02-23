@@ -10,7 +10,7 @@ import ListItem from "@mui/material/ListItem";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import logo from "../../assets/logo.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logOut, selectCurrentUser } from "../../redux/features/auth/authSlice";
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
@@ -33,7 +33,7 @@ const drawerWidth = 240;
 
 const NavBar = (props: Props) => {
   const { window } = props;
-
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const dispatch = useAppDispatch();
@@ -43,7 +43,10 @@ const NavBar = (props: Props) => {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-
+  const handleLogOut = () => {
+    dispatch(logOut());
+    navigate("/login");
+  };
   // for mobile menu
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -71,10 +74,7 @@ const NavBar = (props: Props) => {
         </ListItem>
         <ListItem sx={{ marginLeft: "-16px" }}>
           {user ? (
-            <ListItemButton
-              onClick={() => dispatch(logOut())}
-              sx={{ color: "red" }}
-            >
+            <ListItemButton onClick={handleLogOut} sx={{ color: "red" }}>
               <Logout />
               <ListItemText sx={{ marginLeft: "30px" }}>Logout</ListItemText>
             </ListItemButton>
@@ -167,7 +167,7 @@ const NavBar = (props: Props) => {
               <Box>
                 {user ? (
                   <button
-                    onClick={() => dispatch(logOut())}
+                    onClick={handleLogOut}
                     style={{ color: "red", cursor: "pointer" }}
                   >
                     logout

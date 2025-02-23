@@ -54,7 +54,7 @@ export const adminDashboardSidebarItems = [
   //   icon: <AccessTime />,
   // },
   {
-    name: "order details",
+    name: "my orders",
     icon: <Inventory />,
   },
   {
@@ -93,9 +93,8 @@ export const userDashboardSidebarItems = [
     name: "Profile settings",
     icon: <AccountCircle />,
   },
-
   {
-    name: "order details",
+    name: "my orders",
     icon: <Inventory />,
   },
 ];

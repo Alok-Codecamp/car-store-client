@@ -8,9 +8,9 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 import { logOut, setUser } from "../features/auth/authSlice";
-
+// https://car-store-express-app.vercel.app/api
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://car-store-express-app.vercel.app/api",
+  baseUrl: "http://localhost:5000/api",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -30,7 +30,6 @@ const BaseQueryWithRefreshToken: BaseQueryFn<
   let result = await baseQuery(args, api, extraOtions);
   console.log(result);
   if (result.error?.status === 500) {
-    console.log(result);
     // car-store-express-app.vercel.app
     const res = await fetch(
       "https://car-store-express-app.vercel.app/api/auth/refresh-token",

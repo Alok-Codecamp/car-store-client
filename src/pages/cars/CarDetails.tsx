@@ -11,7 +11,6 @@ const CarDetails = () => {
   const { id } = useParams();
 
   const { data: carData, isLoading } = useGetCarByIdQuery(id as string);
-  // console.log(carData);
   const car = carData?.data as ICars;
   console.log(car);
 
@@ -91,7 +90,8 @@ const CarDetails = () => {
             >
               <span>Price:{car?.price}</span>
               <span style={{ color: `${car?.inStock ? "green" : "red"}` }}>
-                Status:{car?.inStock ? "In stock" : "out of stock"}
+                Status:
+                {car?.inStock ? `${car?.quantity}In stock` : "out of stock"}
               </span>
               <span>Brand:{car?.brand}</span>
             </Box>

@@ -58,7 +58,7 @@ const Login = () => {
       // toast for succesfull login
       toast.success("Login successfully", { id: toastId });
       // redirect after login
-      navigate(`/${verifyUser?.role}/dashboard`);
+      navigate("/home");
     } catch (error: any) {
       toast.error(error?.message || `login Faild ! ${error?.message}`, {
         id: toastId,

@@ -24,6 +24,7 @@ import {
 import { Logout } from "@mui/icons-material";
 import { TMenuDropdown } from "../../types/navListItems";
 import { TDecoded } from "../../types/userType";
+import dashboarBg from "../../assets/addCarBg.png";
 // import { Collapse } from "@mui/material";
 
 const drawerWidth = 240;
@@ -40,7 +41,7 @@ const Dashboard = () => {
   //   setOpen(updatedOpen);
   // };
   const user = useAppSelector(selectCurrentUser) as TDecoded;
-  console.log(user);
+
   const { pathname } = useLocation();
   const myRole = pathname.split("/").slice(1, 2);
 
@@ -70,6 +71,8 @@ const Dashboard = () => {
       break;
   }
 
+  console.log(pathname === `/${user.role}/dashboard`);
+
   const drawer = (
     <Box>
       <Toolbar>
@@ -78,7 +81,7 @@ const Dashboard = () => {
             margin: "auto",
           }}
         >
-          Dashboard
+          <Link to={`/${user.role}/dashboard`}>Dashboard</Link>
         </Typography>
       </Toolbar>
       <Divider />
@@ -262,7 +265,15 @@ const Dashboard = () => {
         }}
       >
         <Toolbar />
-        {user.role === myRole[0] ? <Outlet /> : <></>}
+        {pathname === `/${user.role}/dashboard` ? (
+          <Box>
+            <img src={dashboarBg} width="100%" alt="" />
+          </Box>
+        ) : user.role === myRole[0] ? (
+          <Outlet />
+        ) : (
+          <></>
+        )}
       </Box>
     </Box>
   );

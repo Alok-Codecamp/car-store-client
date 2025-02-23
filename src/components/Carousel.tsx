@@ -13,6 +13,7 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 import { ArrowBackIosRounded } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
+import { Link } from "react-router-dom";
 const images = [
   { small: suv_xs, medium: suv_sm, large: suv_lg },
   { small: rols_xs, medium: rols_sm, large: rols_lg },
@@ -134,7 +135,7 @@ const Carousel = () => {
                   ":hover": { backgroundColor: "#ff3b4b" },
                 }}
               >
-                Book Order Now
+                <Link to="/cars">Book Order Now</Link>
               </Button>
               <Button
                 sx={{
@@ -147,7 +148,7 @@ const Carousel = () => {
                   ":hover": { backgroundColor: "#ff3b4b" },
                 }}
               >
-                Book a Test Drive
+                <Link to="/cars">Book a Test Drive</Link>
               </Button>
             </Box>
           </Box>

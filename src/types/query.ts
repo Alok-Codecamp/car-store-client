@@ -12,7 +12,7 @@ export type TError = {
 
 export type TQueryParam = {
     name: string;
-    value: string | React.Key | Record<string, unknown>;
+    value: string | React.Key | Record<string, unknown> | boolean;
 };
 
 export type TMeta = {

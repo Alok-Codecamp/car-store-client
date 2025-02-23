@@ -1,50 +1,49 @@
-# React + TypeScript + Vite
+# Motion Era Car Shop Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview:
 
-Currently, two official plugins are available:
+The Car Shop application is designed to provide a user-friendly platform where users can browse, manage, and purchase cars. It includes features like user authentication (role-based), secure login, JWT token handling, and smooth product management. The platform is built with responsiveness, error-free functionality, and visually appealing design.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Main Functionalities
 
-## Expanding the ESLint configuration
+## Users can register with name, email, and password.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Users can login with email and password
 
-- Configure the top-level `parserOptions` property like this:
+###Search Functionality: Allows users to search by brand, car name, or category.
+###Filters: Includes filters like price range, model, brand, category, and availability.
+###Dynamic Results: Updates product results based on search terms or selected filters.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Checkout Page:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Users can place orders.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Payment Integration:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+SurjoPay as the payment gateway.
+
+## Admin Dashboard:
+
+Manage users like deactivate accounts.
+Manage products (CRUD operations).
+Manage orders (CRUD operations).
+
+## User Dashboard:
+
+View and manage orders.
+Manage profile settings, including password updates (requiring the current password for security).
+
+## Update Order Status: Admins can update order statuses and provide an estimated delivery date.
+
+Reflect Updates: Changes in status are immediately reflected to users.
+
+## Technologies Used:
+
+React
+React Router
+Node.js
+Express.js
+MongoDB
+JWT Authentication
+Material-UI (for UI components)
+SurjoPay (Payment Gateway)

@@ -4,8 +4,7 @@ import DeleteCar from "../components/admin/carManagement/DeleteCar";
 import UserAccounts from "../components/admin/userManagement/UserAccounts";
 import UpdateCar from "../components/admin/carManagement/UpdateCar";
 import User from "../components/admin/userManagement/User";
-
-import OrderDetails from "../pages/orders/OrderDetails";
+import MyOrders from "../pages/orders/MyOrders";
 
 export const adminRoutes = [
   {
@@ -21,8 +20,8 @@ export const adminRoutes = [
     element: <AllOrders />,
   },
   {
-    path: "order-details",
-    element: <OrderDetails />,
+    path: "my-orders",
+    element: <MyOrders />,
   },
   {
     path: "add-car",
