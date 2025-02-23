@@ -1,6 +1,6 @@
-import { Box, Breadcrumbs, Button, Skeleton } from "@mui/material";
+import { Box, Breadcrumbs, Button } from "@mui/material";
 import NavBar from "../../components/navBar/NavBar";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import { Home } from "@mui/icons-material";
 import { useGetCarByIdQuery } from "../../redux/features/admin/carManagement/carManagementApi";
@@ -10,15 +10,10 @@ import FeaturedSkelton from "../../components/layout/Skelton";
 const CarDetails = () => {
   const { id } = useParams();
 
-  const {
-    data: carData,
-    isLoading,
-    isFetching,
-  } = useGetCarByIdQuery(id as string);
+  const { data: carData, isLoading } = useGetCarByIdQuery(id as string);
   // console.log(carData);
   const car = carData?.data as ICars;
   console.log(car);
-  const { pathname } = useLocation();
 
   return (
     <Box>

@@ -21,7 +21,7 @@ const ChangePassword = () => {
 
   const currentUser = myData?.data?.data;
 
-  const [changeAccountPassword, { isLoading, error }] =
+  const [changeAccountPassword, { isLoading }] =
     useChangeAccountPasswordMutation();
 
   const {
@@ -47,7 +47,7 @@ const ChangePassword = () => {
       if (newData) {
         toast.success("Password updated", { id: toastId });
       } else {
-        toast.error(error?.data?.message || "Password changeing faild!");
+        toast.error("Password changeing faild!", { id: toastId });
       }
     } catch (error: any) {
       toast.error(error?.message || ` ${error?.message}`, {

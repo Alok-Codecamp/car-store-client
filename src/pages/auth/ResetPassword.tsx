@@ -46,12 +46,14 @@ const ResetPassword = () => {
     };
     // console.log(newData);
     const res = await resetPassword(newData);
-    console.log(res.error);
+    const errorMessage =
+      (res?.error && (res.error as any)?.data?.message) ||
+      "somethin went wrong";
     if (res.data) {
       setResetPasswordData(res?.data?.message);
     }
     if (res?.error) {
-      setResetPasswordError(res?.error?.data?.message);
+      setResetPasswordError(errorMessage);
     }
 
     reset();
@@ -117,8 +119,8 @@ const ResetPassword = () => {
 
             <h3 className="error-text">
               {inputError?.confirmPassword
-                ? inputError?.confirmPassword?.message
-                : inputError?.newPassword?.message}
+                ? (inputError?.confirmPassword as any)?.message
+                : (inputError?.newPassword as any)?.message}
             </h3>
             <form
               className="login-form"

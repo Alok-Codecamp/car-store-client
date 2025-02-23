@@ -24,6 +24,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [login, { error, isLoading }] = useLoginMutation();
+  const errorMessage =
+    (error && (error as any)?.data?.message) || "somethin went wrong";
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectCurrentUser);
   console.log(user);
@@ -113,7 +115,7 @@ const Login = () => {
             >
               New user? Click for Register
             </Link>
-            <h3 className="error-text">{error ? error?.data?.message : " "}</h3>
+            <h3 className="error-text">{error ? errorMessage : " "}</h3>
             <form
               className="login-form"
               onSubmit={handleSubmit(onSubmit, (errors) => console.log(errors))}

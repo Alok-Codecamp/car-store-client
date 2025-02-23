@@ -26,7 +26,8 @@ const Register = () => {
   const dispatch = useAppDispatch();
 
   const [registerUser, { data, error, isLoading }] = useRegisterUserMutation();
-
+  const errorMessage =
+    (error && (error as any)?.data?.message) || "somethin went wrong";
   console.log(data, error);
 
   const [login] = useLoginMutation();
@@ -60,7 +61,7 @@ const Register = () => {
         toast.success("registration successfully", { id: toastId });
         navigate("/home");
       } else {
-        toast.error(error?.data?.message, {
+        toast.error(errorMessage, {
           id: toastId,
         });
       }
@@ -123,7 +124,7 @@ const Register = () => {
             >
               have an account? Please login!
             </Link>
-            <h3 className="error-text">{error ? error?.data?.message : " "}</h3>
+            <h3 className="error-text">{error ? errorMessage : " "}</h3>
             <form
               className="login-form"
               onSubmit={handleSubmit(onSubmit, (errors) => console.log(errors))}

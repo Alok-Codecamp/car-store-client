@@ -17,7 +17,7 @@ const EditProfile = () => {
   const { data: myData, isSuccess } = useMyAccountQuery(user.email);
   console.log(myData);
   const formData = myData?.data;
-  const [updateUser, { isLoading, error }] = useUpdateMyAccountMutation();
+  const [updateUser, { isLoading }] = useUpdateMyAccountMutation();
   const {
     register,
     handleSubmit,
@@ -51,7 +51,7 @@ const EditProfile = () => {
         toast.success("user data updated", { id: toastId });
         toast.dismiss(toastId);
       } else {
-        toast.error(error?.data?.message || "updating faild");
+        toast.error("updating faild");
       }
     } catch (error: any) {
       toast.error(error?.message || `login Faild ! ${error?.message}`, {

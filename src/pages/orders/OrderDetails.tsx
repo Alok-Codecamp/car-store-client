@@ -1,11 +1,10 @@
-import React from "react";
 import { useSearchParams } from "react-router-dom";
 import { useVerifyPaymentQuery } from "../../redux/features/admin/orderManagement/orderManagementApi";
 
 const OrderDetails = () => {
   const [searchParams] = useSearchParams();
   console.log(searchParams);
-  const { data: paymentData, isLoading } = useVerifyPaymentQuery(
+  const { data: paymentData } = useVerifyPaymentQuery(
     searchParams.get("order_id")
   );
   console.log(paymentData);

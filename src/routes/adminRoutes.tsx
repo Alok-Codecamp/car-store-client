@@ -4,7 +4,7 @@ import DeleteCar from "../components/admin/carManagement/DeleteCar";
 import UserAccounts from "../components/admin/userManagement/UserAccounts";
 import UpdateCar from "../components/admin/carManagement/UpdateCar";
 import User from "../components/admin/userManagement/User";
-import Order from "../components/admin/orderManagement/Order";
+
 import OrderDetails from "../pages/orders/OrderDetails";
 
 export const adminRoutes = [

@@ -1,7 +1,4 @@
-import {
-  TUser,
-  useMyAccountQuery,
-} from "../../redux/features/user/accountManagementApi";
+import { useMyAccountQuery } from "../../redux/features/user/accountManagementApi";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../../redux/features/auth/authSlice";
 import { TDecoded } from "../../types/userType";
@@ -11,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const MyAccount = () => {
   const user = useAppSelector(selectCurrentUser) as TDecoded;
-  const { data: userData, isFetching } = useMyAccountQuery(user.email);
+  const { data: userData } = useMyAccountQuery(user.email);
   const myData = userData?.data?.data;
   console.log(myData);
   return (

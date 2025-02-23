@@ -1,6 +1,6 @@
 import { baseApi } from "../../api/baseApi";
 
-type TRole = "user" | "admin";
+// type TRole = "user" | "admin";
 
 export interface TUser {
     name?: string;
