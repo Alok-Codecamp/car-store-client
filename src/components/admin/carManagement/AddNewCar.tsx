@@ -124,7 +124,7 @@ const AddNewCar = () => {
             type="submit"
             className="submit-button"
           >
-            Submit
+            Add Car
           </Button>
         </form>
       </Box>

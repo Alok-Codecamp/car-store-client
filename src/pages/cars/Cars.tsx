@@ -12,6 +12,8 @@ import { Link, useLocation } from "react-router-dom";
 import {
   BrandingWatermark,
   Category,
+  CheckBox,
+  EventAvailable,
   FilterList,
   Home,
 } from "@mui/icons-material";
@@ -211,13 +213,16 @@ const Cars = () => {
       </FilterItems>
       <Divider />
       <FilterItems
-        dropDownName="Category"
-        drowDownIcon={<Category />}
+        dropDownName="Availability "
+        drowDownIcon={<CheckBox />}
         handleDropDown={handleFilterDropDwon}
         index={0}
         open={open[0]}
       >
-        <Box>
+        <Button
+          sx={{ color: "black", fontSize: "11.5px" }}
+          onClick={handleInStockChange}
+        >
           <input
             style={{
               width: "20px",
@@ -229,8 +234,8 @@ const Cars = () => {
             checked={inStock}
             value={"instock"}
           />
-          <span style={{ fontSize: "14px" }}>In stock</span>
-        </Box>
+          In stock
+        </Button>
       </FilterItems>
     </Box>
   );
@@ -358,13 +363,16 @@ const Cars = () => {
             </FilterItems>
             <Divider />
             <FilterItems
-              dropDownName="Category"
-              drowDownIcon={<Category />}
+              dropDownName="Availability "
+              drowDownIcon={<CheckBox />}
               handleDropDown={handleFilterDropDwon}
               index={0}
               open={open[0]}
             >
-              <Box>
+              <Button
+                sx={{ color: "black", fontSize: "11.5px" }}
+                onClick={handleInStockChange}
+              >
                 <input
                   style={{
                     width: "20px",
@@ -376,8 +384,8 @@ const Cars = () => {
                   checked={inStock}
                   value={"instock"}
                 />
-                <span style={{ fontSize: "14px" }}>In stock</span>
-              </Box>
+                In stock
+              </Button>
             </FilterItems>
           </Box>
           <Box>

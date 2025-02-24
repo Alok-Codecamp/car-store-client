@@ -37,7 +37,7 @@ export const adminDashboardSidebarItems = [
   //   icon: <ManageAccounts />,
   // },
   {
-    name: "All Users",
+    name: "Users Management",
     icon: <AccountCircle />,
   },
 

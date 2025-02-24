@@ -8,7 +8,7 @@ import MyOrders from "../pages/orders/MyOrders";
 
 export const adminRoutes = [
   {
-    path: "all-users",
+    path: "users-management",
     element: <UserAccounts />,
   },
   {

@@ -4,6 +4,7 @@
 }
 .add-car-form input,
 select {
+  background-color: rgba(0, 0, 0, 0.6);
   padding-left: 10px;
   border: 2px solid ghostwhite;
   height: 36px;
@@ -15,7 +16,15 @@ select {
   color: white; /* This will apply to the selected value */
   background-color: rgba(255, 255, 255, 0.1);
 }
-
+.add-car-form textarea {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding-left: 10px;
+  border: 2px solid ghostwhite;
+  width: 60%;
+  margin: 10px;
+  border-radius: 10px;
+}
 /* Styling dropdown options */
 .add-car-form select option {
   background-color: black;

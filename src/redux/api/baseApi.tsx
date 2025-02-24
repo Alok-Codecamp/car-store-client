@@ -10,7 +10,7 @@ import { RootState } from "../store";
 import { logOut, setUser } from "../features/auth/authSlice";
 // https://car-store-express-app.vercel.app/api
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/api",
+  baseUrl: "https://car-store-express-app.vercel.app/api",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -28,7 +28,7 @@ const BaseQueryWithRefreshToken: BaseQueryFn<
   DefinitionType
 > = async (args, api, extraOtions): Promise<any> => {
   let result = await baseQuery(args, api, extraOtions);
-  console.log(result);
+
   if (result.error?.status === 500) {
     // car-store-express-app.vercel.app
     const res = await fetch(
@@ -39,7 +39,7 @@ const BaseQueryWithRefreshToken: BaseQueryFn<
       }
     );
     const data = await res.json();
-    console.log(data);
+
     if (data?.data?.accessToken) {
       const user = (api.getState() as RootState).auth.user;
       console.log(user);

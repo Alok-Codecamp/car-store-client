@@ -262,7 +262,7 @@ const PlaceOrder = () => {
                       animationDuration="0.75"
                     />
                   ) : (
-                    "Place Order"
+                    "Order Now"
                   )}
                 </Button>
               </form>

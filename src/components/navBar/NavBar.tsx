@@ -177,7 +177,7 @@ const NavBar = (props: Props) => {
                     to="/login"
                     style={{ color: "black", cursor: "pointer" }}
                   >
-                    Login
+                    login/signup
                   </Link>
                 )}
               </Box>

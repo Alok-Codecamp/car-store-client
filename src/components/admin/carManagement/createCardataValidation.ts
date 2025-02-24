@@ -12,8 +12,19 @@ const createCardataValidation = z.object({
     description: z.string().min(1, { message: "Description is required!" }),
     photoUrl: z.string().min(1, { message: "InStock is required!" }),
 });
+const updateCardataValidation = z.object({
+    brand: z.string().optional(),
+    model: z.string().optional(),
+    year: z.string().optional(),
+    price: z.string().optional(),
+    quantity: z.string().optional(),
+    category: z.string().optional(),
+    description: z.string().optional(),
+    photoUrl: z.string().optional(),
+});
 
 
 export const cardataValidationSchema = {
-    createCardataValidation
+    createCardataValidation,
+    updateCardataValidation
 }

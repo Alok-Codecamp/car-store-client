@@ -17,9 +17,18 @@ const userManagementApi = baseApi.injectEndpoints({
                 url: '/users',
                 method: 'GET',
             })
-        })
+        }),
+        changeStatus: builder.mutation({
+            query: (data) => {
+                return {
+                    url: `/users/${data.email}`,
+                    method: 'PUT',
+                    body: { status: data?.status }
+                };
+            }
+        }),
     })
 })
 
 
-export const { useRegisterUserMutation, useGetAllUserQuery } = userManagementApi;
+export const { useRegisterUserMutation, useGetAllUserQuery, useChangeStatusMutation } = userManagementApi;
