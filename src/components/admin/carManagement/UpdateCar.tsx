@@ -11,6 +11,8 @@ import {
   CardContent,
   CardMedia,
   Grid2,
+  Pagination,
+  Stack,
   Typography,
 } from "@mui/material";
 import carBg from "../../../assets/addCarBg.png";
@@ -19,17 +21,17 @@ import {
   useGetCarsQuery,
   useUpdateCarMutation,
 } from "../../../redux/features/admin/carManagement/carManagementApi";
-
 import { carCategory } from "./constants";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
-import { TUser } from "../../../redux/features/user/accountManagementApi";
 
 const UpdateCar = () => {
-  const { data: cars } = useGetCarsQuery([{ name: "limit", value: 100 }]);
+  const [page, setPage] = useState(1);
+
+  const { data: cars } = useGetCarsQuery([{ name: "page", value: page }]);
   const [updateCar] = useUpdateCarMutation();
   const [car, setCar] = useState("");
   const { data: carId, refetch } = useGetCarByIdQuery(car);
@@ -61,7 +63,13 @@ const UpdateCar = () => {
     }
     console.log(res);
   };
-
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+    console.log(event.target);
+  };
   if (car) {
     return (
       <Box
@@ -279,6 +287,15 @@ const UpdateCar = () => {
             </Grid2>
           ))}
       </Grid2>
+      <Stack spacing={2} mt={6} ml="auto" width="fit-content">
+        <Pagination
+          count={10}
+          variant="outlined"
+          shape="rounded"
+          page={page} // Set the current page
+          onChange={handlePageChange} // Handle page change
+        />
+      </Stack>
     </Box>
   );
 };

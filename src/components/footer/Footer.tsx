@@ -197,34 +197,50 @@ const Footer = () => {
           </List>
         </Box>
       </Box>
-      <Box textAlign="center" ml={12} pb={2}>
+      <Box textAlign="center" pb={2}>
         <p style={{ color: "white", fontSize: "24px", marginRight: "20px" }}>
           {" "}
           Connect With Us
         </p>
         <IconButton
-          sx={{ marginRight: "20px", color: "white" }}
+          sx={{
+            marginRight: "20px",
+            color: "white",
+            ":visited": { color: "white" },
+          }}
           color="primary"
           href="https://facebook.com"
         >
-          <Facebook sx={{ fontSize: "36px" }} />
+          <Facebook sx={{ fontSize: "36px", ":visited": { color: "white" } }} />
         </IconButton>
         <IconButton
-          sx={{ marginRight: "20px", color: "white" }}
+          sx={{
+            marginRight: "20px",
+            color: "white",
+            ":visited": { color: "white" },
+          }}
           color="primary"
           href="https://twitter.com"
         >
           <Twitter sx={{ fontSize: "36px" }} />
         </IconButton>
         <IconButton
-          sx={{ marginRight: "20px", color: "white" }}
+          sx={{
+            marginRight: "20px",
+            color: "white",
+            ":visited": { color: "white" },
+          }}
           color="primary"
           href="https://instagram.com"
         >
           <Instagram sx={{ fontSize: "36px" }} />
         </IconButton>
         <IconButton
-          sx={{ marginRight: "20px", color: "white" }}
+          sx={{
+            marginRight: "20px",
+            color: "white",
+            ":visited": { color: "white" },
+          }}
           href="https://linkedin.com"
         >
           <LinkedIn sx={{ fontSize: "36px" }} />

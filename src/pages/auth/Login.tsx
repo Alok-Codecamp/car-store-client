@@ -28,8 +28,11 @@ const Login = () => {
     (error && (error as any)?.data?.message) || "somethin went wrong";
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectCurrentUser);
-  console.log(user);
+
+  // navigation hook
   const navigate = useNavigate();
+
+  // react hook form
   const {
     register,
     handleSubmit,
@@ -38,14 +41,13 @@ const Login = () => {
     resolver: zodResolver(userDataValidation.loginDataValidationSchema),
   });
 
+  // form submit handler
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log("data", data);
     const toastId = toast.loading("loging in...");
     const userInfo = {
       email: data?.email,
       password: data?.password,
     };
-
     try {
       const token = await login(userInfo).unwrap();
       console.log(token.data);

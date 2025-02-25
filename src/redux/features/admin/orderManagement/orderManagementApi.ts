@@ -27,7 +27,25 @@ const orderManagementApi = baseApi.injectEndpoints({
             })
         }),
 
-
+        updateOrder: builder.mutation({
+            query: (data) => {
+                console.log(data)
+                return {
+                    url: `/orders/${data.orderId}`,
+                    method: 'PUT',
+                    body: { status: data?.status }
+                }
+            }
+        }),
+        deleteOrder: builder.mutation({
+            query: (orderId) => {
+                console.log(orderId)
+                return {
+                    url: `/orders/${orderId}`,
+                    method: 'DELETE',
+                }
+            }
+        }),
         verifyPayment: builder.query({
             query: (order_id) => ({
                 url: '/orders/verify-payment',
@@ -40,4 +58,11 @@ const orderManagementApi = baseApi.injectEndpoints({
 })
 
 
-export const { useCreateOrderMutation, useVerifyPaymentQuery, useGetOrdersQuery, useGetOrdersByUserIdQuery } = orderManagementApi;
+export const {
+    useCreateOrderMutation,
+    useVerifyPaymentQuery,
+    useGetOrdersQuery,
+    useGetOrdersByUserIdQuery,
+    useUpdateOrderMutation,
+    useDeleteOrderMutation,
+} = orderManagementApi;

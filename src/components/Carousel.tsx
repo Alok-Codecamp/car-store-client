@@ -23,7 +23,7 @@ const images = [
 const Carousel = () => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   return (
-    <div>
+    <div style={{ marginTop: "72px" }}>
       <ReactSimplyCarousel
         activeSlideIndex={activeSlideIndex}
         onRequestChange={setActiveSlideIndex}

@@ -121,7 +121,10 @@ const NavBar = (props: Props) => {
             <MenuIcon />
           </IconButton>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            <img src={logo} alt="logo" width={150} />
+            <Link to="/home">
+              {" "}
+              <img src={logo} alt="logo" width={150} />
+            </Link>
           </Box>
           <Box
             sx={{ display: { xs: "none", sm: "block" }, marginLeft: "auto" }}

@@ -7,6 +7,8 @@ import {
   CardMedia,
   CardContent,
   CardActions,
+  Stack,
+  Pagination,
 } from "@mui/material";
 
 import {
@@ -15,9 +17,13 @@ import {
 } from "../../../redux/features/admin/carManagement/carManagementApi";
 import { ICars } from "../../../types/carInterface";
 import { toast } from "sonner";
+import { useState } from "react";
 
 const DeleteCar = () => {
-  const { data: cars, refetch } = useGetCarsQuery([]);
+  const [page, setPage] = useState(1);
+  const { data: cars, refetch } = useGetCarsQuery([
+    { name: "page", value: page },
+  ]);
   const [deleteCar] = useDeleteCarMutation();
   // console.log(cars);
   const handleDeleteCar = async (id: string) => {
@@ -33,10 +39,13 @@ const DeleteCar = () => {
     } else {
       toast.error(result.message as string, { id: toastId });
     }
-    // } catch (error: any) {
-    //   console.log(error);
-    //   toast.error(error.data.message as string, { id: toastId });
-    // }
+  };
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+    console.log(event.target);
   };
   return (
     <Box
@@ -110,6 +119,15 @@ const DeleteCar = () => {
             </Grid2>
           ))}
       </Grid2>
+      <Stack spacing={2} mt={6} ml="auto" width="fit-content">
+        <Pagination
+          count={10}
+          variant="outlined"
+          shape="rounded"
+          page={page} // Set the current page
+          onChange={handlePageChange} // Handle page change
+        />
+      </Stack>
     </Box>
   );
 };

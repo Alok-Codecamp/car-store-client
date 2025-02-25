@@ -71,8 +71,7 @@ const Dashboard = () => {
       break;
   }
 
-  console.log(pathname === `/${user.role}/dashboard`);
-
+  // menu side bar
   const drawer = (
     <Box>
       <Toolbar>

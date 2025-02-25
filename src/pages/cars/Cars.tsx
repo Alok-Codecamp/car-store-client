@@ -6,14 +6,14 @@ import {
   Button,
   Divider,
   Grid2,
-  Typography,
+  Pagination,
+  Stack,
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import {
   BrandingWatermark,
   Category,
   CheckBox,
-  EventAvailable,
   FilterList,
   Home,
 } from "@mui/icons-material";
@@ -34,6 +34,7 @@ import ImgMediaCard from "../../components/layout/Card";
 type Anchor = "right";
 
 const Cars = () => {
+  const [page, setPage] = useState(1);
   const [open, setOpen] = useState([true, true, true]);
   const [state, setState] = useState({ right: false });
   const [minPrice, setMinPrice] = useState(10000);
@@ -53,6 +54,7 @@ const Cars = () => {
     return [
       { name: "limit", value: limit },
       { name: "sort", value: sort },
+      { name: "page", value: page },
       { name: "minPrice", value: minPrice },
       { name: "maxPrice", value: maxPrice },
       { name: "inStock", value: inStock },
@@ -60,7 +62,7 @@ const Cars = () => {
       ...category.map((item) => ({ name: "category", value: item })),
       ...brand.map((item) => ({ name: "brand", value: item })),
     ];
-  }, [sort, minPrice, maxPrice, search, category, limit, brand, inStock]);
+  }, [page, sort, limit, minPrice, maxPrice, search, category, brand, inStock]);
 
   // Get car query
   const { data: cars, isLoading, error } = useGetCarsQuery(queryArray);
@@ -121,7 +123,14 @@ const Cars = () => {
       return newOpen;
     });
   };
-
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    console.log(event);
+    setPage(value);
+    console.log("Selected Page:", value); // Get the pagination value
+  };
   const list = () => (
     <Box
       sx={{ width: 280 }}
@@ -486,6 +495,22 @@ const Cars = () => {
                 </Grid2>
               )}
             </Box>
+            <Stack
+              spacing={2}
+              mt={6}
+              mb={4}
+              ml="auto"
+              mr={3}
+              width="fit-content"
+            >
+              <Pagination
+                count={10}
+                variant="outlined"
+                shape="rounded"
+                page={page} // Set the current page
+                onChange={handlePageChange} // Handle page change
+              />
+            </Stack>
           </Box>
         </Box>
       </div>

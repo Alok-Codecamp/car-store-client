@@ -7,6 +7,7 @@ import {
   Box,
   Paper,
 } from "@mui/material";
+import NavBar from "../../components/navBar/NavBar";
 
 const ContactPage = () => {
   const {
@@ -21,7 +22,8 @@ const ContactPage = () => {
 
   return (
     <Container maxWidth="sm">
-      <Paper elevation={3} sx={{ padding: 4, mt: 5 }}>
+      <NavBar />
+      <Paper elevation={3} sx={{ padding: 4, mt: 10 }}>
         <Typography variant="h4" align="center" gutterBottom>
           Contact Us
         </Typography>

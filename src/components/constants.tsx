@@ -8,6 +8,7 @@ import {
   Delete,
   Inventory,
   Update,
+  Settings,
 } from "@mui/icons-material";
 import {} from "@mui/icons-material";
 import { TNavListItems } from "../types/navListItems";
@@ -32,48 +33,20 @@ export const navItems: TNavListItems[] = [
 ];
 
 export const adminDashboardSidebarItems = [
-  // {
-  //   name: "User Management",
-  //   icon: <ManageAccounts />,
-  // },
   {
     name: "Users Management",
     icon: <AccountCircle />,
   },
 
-  // {
-  //   name: "Order Management",
-  //   icon: <Inventory />,
-  // },
   {
-    name: "All Orders",
-    icon: <Inventory />,
+    name: "Manage Orders",
+    icon: <Settings />,
   },
-  // {
-  //   name: "Order Progress",
-  //   icon: <AccessTime />,
-  // },
+
   {
     name: "my orders",
     icon: <Inventory />,
   },
-  {
-    name: "Create Order",
-    icon: <Add />,
-  },
-  {
-    name: "Update Order",
-    icon: <Update />,
-  },
-  {
-    name: "Delete Order",
-    icon: <Delete />,
-  },
-
-  // {
-  //   name: "Car Management",
-  //   icon: <DirectionsCar />,
-  // },
   {
     name: "Add Car",
     icon: <Add />,
