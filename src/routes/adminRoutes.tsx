@@ -3,18 +3,29 @@ import AddNewCar from "../components/admin/carManagement/AddNewCar";
 import DeleteCar from "../components/admin/carManagement/DeleteCar";
 import UserAccounts from "../components/admin/userManagement/UserAccounts";
 import UpdateCar from "../components/admin/carManagement/UpdateCar";
-// import User from "../components/admin/userManagement/User";
 import MyOrders from "../pages/orders/MyOrders";
+import MyAccount from "../components/user/MyAccount";
+import EditProfile from "../components/user/EditProfile";
+import ChangePassword from "../components/user/ChangePassword";
 
 export const adminRoutes = [
+  {
+    path: "profile-settings",
+    element: <MyAccount />,
+  },
+  {
+    path: "profile-settings/edit-profile",
+    element: <EditProfile />,
+  },
+  {
+    path: "profile-settings/change-password",
+    element: <ChangePassword />,
+  },
   {
     path: "users-management",
     element: <UserAccounts />,
   },
-  // {
-  //   path: "user",
-  //   element: <User />,
-  // },
+
   {
     path: "manage-orders",
     element: <AllOrders />,

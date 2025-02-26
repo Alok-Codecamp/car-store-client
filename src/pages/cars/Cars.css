@@ -13,7 +13,7 @@
   height: 60px;
   width: 100%;
   background-color: white;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .filter-icon-button {
@@ -27,7 +27,6 @@ input[type="range"] {
   border-radius: 0px;
   background: whitesmoke;
   outline: none;
-  /* transition: background 0.1s; */
 }
 input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
@@ -60,15 +59,13 @@ input[type="range"]::-moz-range-track {
   width: 400px;
   margin-left: 10px;
 }
+.search-box-sm {
+  height: 36px;
+  width: 200px;
+  margin-left: 10px;
+}
 
 .sub-info span {
   margin-right: 60px;
   font-size: 12px;
 }
-
-/* input[type="range"]::-moz-range-thumb {
-  background: #ff5733;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-} */

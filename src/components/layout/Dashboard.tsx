@@ -24,7 +24,7 @@ import {
 import { Logout } from "@mui/icons-material";
 import { TMenuDropdown } from "../../types/navListItems";
 import { TDecoded } from "../../types/userType";
-import dashboarBg from "../../assets/addCarBg.png";
+import dashboarBg from "../../assets/dashboardBg.png";
 // import { Collapse } from "@mui/material";
 
 const drawerWidth = 240;
@@ -109,7 +109,7 @@ const Dashboard = () => {
       <List>
         {navItems.map((item, index) => (
           <ListItem key={index} disablePadding>
-            <ListItemButton>
+            <ListItemButton sx={{ pl: 4 }}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <NavLink to={`/${item.name.toLocaleLowerCase()}`}>
                 {item.name}
@@ -121,7 +121,7 @@ const Dashboard = () => {
           {user ? (
             <ListItemButton
               onClick={() => dispatch(logOut())}
-              sx={{ color: "red" }}
+              sx={{ color: "red", pl: 4 }}
             >
               <Logout />
               <ListItemText sx={{ marginLeft: "30px" }}>Logout</ListItemText>
@@ -200,7 +200,14 @@ const Dashboard = () => {
                 {user ? (
                   <button
                     onClick={() => dispatch(logOut())}
-                    style={{ color: "red", cursor: "pointer" }}
+                    style={{
+                      color: "red",
+                      cursor: "pointer",
+                      height: "26px",
+                      fontWeight: "500",
+                      fontSize: "16px",
+                      border: "none",
+                    }}
                   >
                     logout
                   </button>

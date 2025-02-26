@@ -1,29 +1,48 @@
-import suv_xs from "../assets/carousel/suv_sm.jpg";
-import suv_sm from "../assets/carousel/suv_sm.jpg";
-import suv_lg from "../assets/carousel/suv_lg.jpg";
-import rols_xs from "../assets/carousel/rols_xs.jpg";
-import rols_sm from "../assets/carousel/rols_sm.jpg";
-import rols_lg from "../assets/carousel/rols_lg.jpg";
-import lamborghini_xs from "../assets/carousel/lamborghini_xs.jpg";
-import lamborghini_sm from "../assets/carousel/lamborghini_sm.jpg";
-import lamborghini_lg from "../assets/carousel/lamborghini_lg.jpg";
 import { useState } from "react";
 import ReactSimplyCarousel from "react-simply-carousel";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import { ArrowBackIosRounded } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
-import { v4 as uuidv4 } from "uuid";
-import { Link } from "react-router-dom";
+import { Box, useMediaQuery } from "@mui/material";
+import black_d from "../assets/carousel/black_d.png";
+import black_m from "../assets/carousel/black_m.png";
+import red_d from "../assets/carousel/red_d.png";
+import red_m from "../assets/carousel/red_m.png";
+import pink_d from "../assets/carousel/pink_d.png";
+import pink_m from "../assets/carousel/pink_m.png";
 const images = [
-  { small: suv_xs, medium: suv_sm, large: suv_lg },
-  { small: rols_xs, medium: rols_sm, large: rols_lg },
-  { small: lamborghini_xs, medium: lamborghini_sm, large: lamborghini_lg },
+  { deskTop: black_d, mobile: black_m, tab: black_d },
+  { deskTop: red_d, mobile: red_m, tab: red_d },
+  { deskTop: pink_d, mobile: pink_m, tab: pink_d },
 ];
 
+type TCarouselPic = {
+  image: string;
+}[];
 const Carousel = () => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const isDesktop = useMediaQuery("(min-width:1199px)");
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const isTablet = useMediaQuery("(max-width:1024px)");
+  let caroouselPic: TCarouselPic = [];
+  if (isMobile) {
+    images.forEach((item) => {
+      caroouselPic.push({ image: item.mobile });
+    });
+  } else if (isDesktop) {
+    images.forEach((item) => {
+      caroouselPic.push({ image: item.deskTop });
+    });
+  } else if (isTablet) {
+    images.forEach((item) => {
+      caroouselPic.push({ image: item.tab });
+    });
+  }
+  console.log(caroouselPic, "m:", isMobile, "tab:", isTablet, "d:", isDesktop);
+
   return (
-    <div style={{ marginTop: "72px" }}>
+    <div
+      style={{ marginTop: "72px", paddingLeft: "20px", paddingRight: "20px" }}
+    >
       <ReactSimplyCarousel
         activeSlideIndex={activeSlideIndex}
         onRequestChange={setActiveSlideIndex}
@@ -48,7 +67,6 @@ const Carousel = () => {
           },
           children: (
             <ArrowForwardIosRoundedIcon
-              key={uuidv4()}
               sx={{
                 color: "rgba(255,255,255,0.5)",
                 fontSize: "50px",
@@ -74,7 +92,6 @@ const Carousel = () => {
           },
           children: (
             <ArrowBackIosRounded
-              key={uuidv4()}
               sx={{
                 color: "rgba(255,255,255,0.5)",
                 fontSize: "50px",
@@ -88,70 +105,23 @@ const Carousel = () => {
           {
             itemsToShow: 1,
             itemsToScroll: 1,
-            minWidth: 640,
+            minWidth: 600,
           },
         ]}
         speed={400}
         easing="linear"
       >
-        {/* here you can also pass any other element attributes. Also, you can use your custom components as slides */}
-        {images.map((image) => (
+        {caroouselPic.map((item, index) => (
           <Box
-            key={uuidv4()}
+            component="img"
+            src={item.image}
+            alt="Image description"
             sx={{
-              width: "80rem",
+              width: "100vw",
               height: "400px",
-              backgroundImage: {
-                lg: `url(${image.large})`,
-                md: `url(${image.large})`,
-                sm: `url(${image.medium})`,
-                xs: `url(${image.small})`,
-              },
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
+              objectFit: "cover",
             }}
-          >
-            <Box>
-              <Typography color="white" variant="h2">
-                New Grandland
-              </Typography>
-              <Typography color="white">
-                Available at your local Vauxhall Showroom £435 per month,
-                <br />
-                plus £435 initial rental Offer available on Grandland Hybrid GS,
-                *T&Cs apply
-              </Typography>
-            </Box>
-            <Box color="black" mt={26} textAlign="center">
-              <Button
-                sx={{
-                  margin: "5px",
-                  color: "white",
-                  cursor: "pointer",
-                  border: "1px solid black",
-                  borderRadius: "20px",
-                  padding: "5px 15px 5px 15px",
-                  ":hover": { backgroundColor: "#ff3b4b" },
-                }}
-              >
-                <Link to="/cars">Book Order Now</Link>
-              </Button>
-              <Button
-                sx={{
-                  margin: "5px",
-                  color: "white",
-                  cursor: "pointer",
-                  border: "1px solid black",
-                  borderRadius: "20px",
-                  padding: "5px 15px 5px 15px",
-                  ":hover": { backgroundColor: "#ff3b4b" },
-                }}
-              >
-                <Link to="/cars">Book a Test Drive</Link>
-              </Button>
-            </Box>
-          </Box>
+          ></Box>
         ))}
       </ReactSimplyCarousel>
     </div>

@@ -25,7 +25,7 @@ const FeaturedProducts = () => {
           marginBottom: "10px",
         }}
       >
-        <Box sx={{ paddingLeft: "100px" }}>
+        <Box>
           <h4 style={{ lineHeight: "5px" }}>Featured Items</h4>
           <h5 style={{ lineHeight: "5px" }}>Check & Get Your Desired Car!</h5>
         </Box>

@@ -34,6 +34,10 @@ export const navItems: TNavListItems[] = [
 
 export const adminDashboardSidebarItems = [
   {
+    name: "Profile settings",
+    icon: <AccountCircle />,
+  },
+  {
     name: "Users Management",
     icon: <AccountCircle />,
   },

@@ -2,12 +2,15 @@ import { Box, Typography } from "@mui/material";
 
 const ExtraSection = () => {
   return (
-    <Box sx={{ marginLeft: "30px", marginRight: "30px" }}>
-      <Box
-        sx={{
-          marginTop: "50px",
-        }}
-      >
+    <Box
+      sx={{
+        marginLeft: "30px",
+        marginRight: "30px",
+        marginTop: "100px",
+        marginBottom: "100px",
+      }}
+    >
+      <Box sx={{}}>
         <Typography
           sx={{ color: "black", fontWeight: "600", fontSize: "18px" }}
         >

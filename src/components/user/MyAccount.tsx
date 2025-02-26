@@ -3,13 +3,13 @@ import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../../redux/features/auth/authSlice";
 import { TDecoded } from "../../types/userType";
 import { Box } from "@mui/material";
-import { AccountCircle, LockRounded } from "@mui/icons-material";
+import { AccountCircle, LockRounded, Person } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 const MyAccount = () => {
   const user = useAppSelector(selectCurrentUser) as TDecoded;
   const { data: userData } = useMyAccountQuery(user.email);
-  const myData = userData?.data?.data;
+  const myData = userData?.data;
   console.log(myData);
   return (
     <Box
@@ -37,7 +37,7 @@ const MyAccount = () => {
             textAlign: "center",
           }}
         >
-          <img
+          {/* <img
             style={{
               border: "2px solid gray",
               borderRadius: "50%",
@@ -45,7 +45,8 @@ const MyAccount = () => {
             }}
             src="https://www.startech.com.bd/image/cache/catalog/laptop/smart/flairedge/flairedge-01-228x228.webp"
             alt="image"
-          />
+          /> */}
+          <Person sx={{ fontSize: "100px" }} />
           <p style={{ lineHeight: "0px" }}>Hello,</p>
           <h3 style={{ lineHeight: "5px" }}>{myData?.name}</h3>
         </Box>

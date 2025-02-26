@@ -274,7 +274,20 @@ const Cars = () => {
           </Breadcrumbs>
         </div>
         <Divider />
-
+        <Box
+          sx={{
+            display: { lg: "none", md: "none", sm: "flex", xs: "flex" },
+            justifyContent: "center",
+            alignItems: "center",
+            marginRight: "20px",
+          }}
+        >
+          <SearchBox
+            searchBoxStyle="search-box-sm"
+            setSearch={setSearch}
+            handleSearch={handleSearch}
+          />
+        </Box>
         <Box
           sx={{
             display: { lg: "grid", md: "grid" },

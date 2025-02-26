@@ -171,7 +171,14 @@ const NavBar = (props: Props) => {
                 {user ? (
                   <button
                     onClick={handleLogOut}
-                    style={{ color: "red", cursor: "pointer" }}
+                    style={{
+                      color: "red",
+                      cursor: "pointer",
+                      height: "26px",
+                      fontWeight: "500",
+                      fontSize: "16px",
+                      border: "none",
+                    }}
                   >
                     logout
                   </button>
