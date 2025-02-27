@@ -18,8 +18,8 @@ const ChangePassword = () => {
   const user = useAppSelector(selectCurrentUser) as TUser;
 
   const { data: myData } = useMyAccountQuery(user.email);
-
-  const currentUser = myData?.data?.data;
+  // console.log(myData);
+  const currentUser = myData?.data;
 
   const [changeAccountPassword, { isLoading }] =
     useChangeAccountPasswordMutation();
@@ -31,10 +31,10 @@ const ChangePassword = () => {
   } = useForm<TChangePassword>({
     resolver: zodResolver(userDataValidation.passwordValidationSchema),
   });
-  console.log(errors);
+
   const onSubmit = async (password: TChangePassword) => {
     const toastId = toast.loading("password changing...");
-
+    console.log(password);
     try {
       const result = await changeAccountPassword({
         email: currentUser?.email as string,
@@ -43,11 +43,15 @@ const ChangePassword = () => {
           newPassword: password.newPassword,
         },
       });
-      const newData = result?.data?.data?.data;
+      console.log(result);
+      const newData = result?.data?.data;
       if (newData) {
         toast.success("Password updated", { id: toastId });
       } else {
-        toast.error("Password changeing faild!", { id: toastId });
+        toast.error(
+          (result?.error as any)?.data?.message || "Password changeing faild!",
+          { id: toastId }
+        );
       }
     } catch (error: any) {
       toast.error(error?.message || ` ${error?.message}`, {

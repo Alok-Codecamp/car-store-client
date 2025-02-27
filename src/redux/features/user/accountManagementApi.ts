@@ -34,9 +34,12 @@ const accountManagementApi = baseApi.injectEndpoints({
         }),
         changeAccountPassword: builder.mutation({
             query: (args: { email: string, data: { oldPassword: string, newPassword: string } }) => ({
+
+
                 url: `/users/change-password/${args.email}`,
                 method: 'PUT',
                 body: args.data
+
             })
         }),
     })
