@@ -11,7 +11,7 @@ import { logOut, setUser } from "../features/auth/authSlice";
 
 //https://car-store-express-app.vercel.app/api
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/api",
+  baseUrl: "https://car-store-express-app.vercel.app/api",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -32,7 +32,7 @@ const BaseQueryWithRefreshToken: BaseQueryFn<
 
   if (result.error?.status === 500) {
     const res = await fetch(
-      "http://localhost:5000/api/auth/refresh-token",
+      "https://car-store-express-app.vercel.app/api/auth/refresh-token",
       {
         method: "POST",
         credentials: "include",
