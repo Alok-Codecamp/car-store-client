@@ -1,9 +1,16 @@
 /* @import "tailwindcss"; */
 
+body {
+  background-color: lightgray;
+}
 a {
   text-decoration: none;
   color: inherit;
 }
 a:visited {
   color: inherit;
+}
+
+ul {
+  list-style: none;
 }

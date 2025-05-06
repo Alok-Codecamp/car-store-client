@@ -37,11 +37,17 @@ const Carousel = () => {
       caroouselPic.push({ image: item.tab });
     });
   }
-  console.log(caroouselPic, "m:", isMobile, "tab:", isTablet, "d:", isDesktop);
+
 
   return (
-    <div
-      style={{ marginTop: "72px", paddingLeft: "20px", paddingRight: "20px" }}
+    <Box
+      sx={{
+        marginTop: {
+          xs: 7,
+          sm: 12
+        },
+
+      }}
     >
       <ReactSimplyCarousel
         activeSlideIndex={activeSlideIndex}
@@ -55,51 +61,17 @@ const Carousel = () => {
           style: {
             background: "none",
             border: "none",
-            alignSelf: "center",
-            cursor: "pointer",
-            fontSize: "30px",
-            height: 30,
-            lineHeight: 1,
-            textAlign: "center",
-            width: 30,
-            marginLeft: "-54px",
-            zIndex: "1",
+
           },
-          children: (
-            <ArrowForwardIosRoundedIcon
-              sx={{
-                color: "rgba(255,255,255,0.5)",
-                fontSize: "50px",
-                ":hover": { color: "white", backgroundColor: "#ff3b4b" },
-                borderRadius: "50%",
-              }}
-            />
-          ),
+
         }}
         backwardBtnProps={{
           style: {
             background: "none",
             border: "none",
-            alignSelf: "center",
-            cursor: "pointer",
-            fontSize: "30px",
-            height: 30,
-            lineHeight: 1,
-            textAlign: "center",
-            width: 30,
-            marginRight: "-32px",
-            zIndex: "1",
+
           },
-          children: (
-            <ArrowBackIosRounded
-              sx={{
-                color: "rgba(255,255,255,0.5)",
-                fontSize: "50px",
-                ":hover": { color: "white", backgroundColor: "#ff3b4b" },
-                borderRadius: "50%",
-              }}
-            />
-          ),
+
         }}
         responsiveProps={[
           {
@@ -113,6 +85,7 @@ const Carousel = () => {
       >
         {caroouselPic.map((item, index) => (
           <Box
+            key={index}
             component="img"
             src={item.image}
             alt="Image description"
@@ -121,10 +94,10 @@ const Carousel = () => {
               height: "400px",
               objectFit: "cover",
             }}
-          ></Box>
+          />
         ))}
       </ReactSimplyCarousel>
-    </div>
+    </Box>
   );
 };
 

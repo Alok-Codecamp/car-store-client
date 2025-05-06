@@ -1,5 +1,5 @@
 import { useGetCarsQuery } from "../../redux/features/admin/carManagement/carManagementApi";
-import { Box, Grid2 } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid2, Typography } from "@mui/material";
 import ImgMediaCard from "../layout/Card";
 import FeaturedSkelton from "../layout/Skelton";
 import { Link } from "react-router-dom";
@@ -20,33 +20,6 @@ const FeaturedProducts = () => {
     >
       <Box
         sx={{
-          display: { lg: "grid" },
-          gridTemplateColumns: "92% 8%",
-          marginBottom: "10px",
-        }}
-      >
-        <Box>
-          <h4 style={{ lineHeight: "5px" }}>Featured Items</h4>
-          <h5 style={{ lineHeight: "5px" }}>Check & Get Your Desired Car!</h5>
-        </Box>
-        <Box
-          sx={{
-            marginTop: "auto",
-            background: "white",
-            boxShadow: "0px 0px 0px 1px lightgray",
-            paddingTop: "8px",
-            paddingBottom: "8px",
-            paddingLeft: "10px",
-            paddingRight: "10px",
-            borderRadius: "5px",
-            ":hover": { backgroundColor: "#ff3b4b", color: "white" },
-          }}
-        >
-          <Link to="/cars">View All</Link>
-        </Box>
-      </Box>
-      <Box
-        sx={{
           display: { lg: "flex" },
           justifyContent: "center",
           alignItems: "center",
@@ -60,11 +33,75 @@ const FeaturedProducts = () => {
               Array.isArray(featuredCars) &&
               featuredCars?.map((car: ICars, index: number) => (
                 <Grid2 key={index} size={{ xs: 12, sm: 6, md: 4, lg: 2 }}>
-                  <ImgMediaCard data={car} />
+                  <Card sx={{ maxWidth: 460 }}>
+                    <CardMedia
+                      component="img"
+                      alt="green iguana"
+                      height="140"
+                      image={car?.photoUrl}
+                    />
+                    <CardContent sx={{ paddingY: "0px" }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          color: "black",
+                        }}
+                      >
+                        <h5>{`${car?.brand} ${car?.model}`}</h5>
+                        <h5>${car?.price}</h5>
+                      </Box>
+
+                    </CardContent>
+                    <CardActions sx={{ padding: '2px' }}>
+                      <Button
+                        size="small"
+                        sx={{
+                          color: "black",
+                          ":hover": { backgroundColor: "#ff3b4b", color: "white" },
+                          fontSize: "12px",
+                          marginRight: "auto",
+
+                        }}
+                      >
+                        <Link to={`/place-order/${car?._id}`}>Buy Now</Link>
+                      </Button>
+                      <Button
+                        size="small"
+                        sx={{
+                          color: "black",
+                          fontSize: "12px",
+                          ":hover": { backgroundColor: "#ff3b4b", color: "white" },
+                          marginLeft: "auto",
+                        }}
+                      >
+                        <Link to={`/cars/${car?._id}`}>View Details</Link>
+                      </Button>
+                    </CardActions>
+                  </Card>
                 </Grid2>
               ))}
           </Grid2>
         )}
+      </Box>
+      <Box
+        sx={{
+
+          background: "white",
+          boxShadow: "0px 0px 0px 1px lightgray",
+          py: "8px",
+          px: "10px",
+          borderRadius: "5px",
+          ":hover": { backgroundColor: "#ff3b4b", color: "white" },
+          width: 'fit-content',
+          ml: 'auto',
+          mr: 'auto',
+          mt: 1
+
+        }}
+      >
+        <Link to="/cars">View All</Link>
       </Box>
     </Box>
   );

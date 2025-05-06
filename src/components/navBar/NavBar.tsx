@@ -16,6 +16,7 @@ import { logOut, selectCurrentUser } from "../../redux/features/auth/authSlice";
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { navItems } from "../constants";
 import { Dashboard, Login, Logout } from "@mui/icons-material";
+import Categories from "../categories/Categories";
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
@@ -100,7 +101,7 @@ const NavBar = (props: Props) => {
     <Box
       sx={{
         display: "flex",
-        marginBottom: "66px",
+
       }}
     >
       <CssBaseline />
@@ -108,6 +109,8 @@ const NavBar = (props: Props) => {
         component="nav"
         sx={{
           backgroundColor: "white",
+
+
         }}
       >
         <Toolbar>
@@ -120,9 +123,9 @@ const NavBar = (props: Props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Box sx={{ display: { xs: "none", sm: "block", marginLeft: "12px" } }}>
             <Link to="/home">
-              {" "}
+
               <img src={logo} alt="logo" width={150} />
             </Link>
           </Box>
@@ -134,6 +137,7 @@ const NavBar = (props: Props) => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                marginRight: "20px"
               }}
             >
               {navItems.map((item, index) => (
@@ -153,7 +157,7 @@ const NavBar = (props: Props) => {
                   {item.name}
                 </NavLink>
               ))}
-              <NavLink
+              {user && <NavLink
                 to={user ? `/${user?.role}/dashboard` : "/login"}
                 style={({ isActive }) => ({
                   marginRight: "10px",
@@ -166,7 +170,7 @@ const NavBar = (props: Props) => {
                 })}
               >
                 Dashboard
-              </NavLink>
+              </NavLink>}
               <Box>
                 {user ? (
                   <button
@@ -191,9 +195,12 @@ const NavBar = (props: Props) => {
                   </Link>
                 )}
               </Box>
+
             </Box>
           </Box>
+
         </Toolbar>
+        <Categories />
       </AppBar>
       <nav>
         <Drawer
