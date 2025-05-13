@@ -1,6 +1,5 @@
 import { useGetCarsQuery } from "../../redux/features/admin/carManagement/carManagementApi";
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid2, Typography } from "@mui/material";
-import ImgMediaCard from "../layout/Card";
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid2 } from "@mui/material";
 import FeaturedSkelton from "../layout/Skelton";
 import { Link } from "react-router-dom";
 import { ICars } from "../../types/carInterface";
@@ -28,7 +27,7 @@ const FeaturedProducts = () => {
         {isLoading ? (
           <FeaturedSkelton quantity={6} />
         ) : (
-          <Grid2 container spacing={2}>
+          <Grid2 container spacing={3.5}>
             {cars &&
               Array.isArray(featuredCars) &&
               featuredCars?.map((car: ICars, index: number) => (

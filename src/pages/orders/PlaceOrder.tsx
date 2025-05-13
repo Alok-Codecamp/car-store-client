@@ -58,7 +58,6 @@ const PlaceOrder = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm();
 
   const handlePlaceOrder = async (data: any) => {

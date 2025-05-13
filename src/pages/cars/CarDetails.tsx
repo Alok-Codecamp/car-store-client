@@ -21,8 +21,8 @@ const CarDetails = () => {
       {/* BreadCrumbs section  */}
       <Box
         sx={{
-          marginTop: "100px",
-          marginLeft: "20px",
+          marginTop: "120px",
+          marginLeft: "30px",
         }}
       >
         <Breadcrumbs aria-label="breadcrumb">

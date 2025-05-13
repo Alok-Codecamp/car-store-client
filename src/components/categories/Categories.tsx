@@ -31,7 +31,7 @@ const Categories = () => {
             color: "white",
             paddingTop: "3px",
             paddingBottom: '3px',
-            paddingLeft: '24px'
+            paddingLeft: '20px'
 
 
         }}
@@ -40,7 +40,7 @@ const Categories = () => {
             {carCategories.map((category) => (
                 <NavLink
                     key={category}
-                    to={`/cars?category=${category}`}
+                    to={`/cars?searchTerm=${category}`}
                     className={({ isActive }) =>
                         isActive
                             ? "text-blue-500 font-semibold underline"

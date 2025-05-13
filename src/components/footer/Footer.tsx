@@ -210,6 +210,7 @@ const Footer = () => {
           }}
           color="primary"
           href="https://facebook.com"
+          target="_blank"
         >
           <Facebook sx={{ fontSize: "36px", ":visited": { color: "white" } }} />
         </IconButton>
@@ -221,6 +222,7 @@ const Footer = () => {
           }}
           color="primary"
           href="https://twitter.com"
+          target="_blank"
         >
           <Twitter sx={{ fontSize: "36px" }} />
         </IconButton>
@@ -232,6 +234,7 @@ const Footer = () => {
           }}
           color="primary"
           href="https://instagram.com"
+          target="_blank"
         >
           <Instagram sx={{ fontSize: "36px" }} />
         </IconButton>
@@ -242,6 +245,7 @@ const Footer = () => {
             ":visited": { color: "white" },
           }}
           href="https://linkedin.com"
+          target="_blank"
         >
           <LinkedIn sx={{ fontSize: "36px" }} />
         </IconButton>

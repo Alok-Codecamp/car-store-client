@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Button from "@mui/joy/Button";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -12,7 +11,7 @@ import {
 } from "../../redux/features/auth/authSlice";
 import "./Login.css";
 import NavBar from "../../components/navBar/NavBar";
-import { Box } from "@mui/material";
+import { Box, Button, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput, Typography } from "@mui/material";
 import banner from "../../assets/carousel/carousel2.jpg";
 import { RotatingLines } from "react-loader-spinner";
 import { TDecoded } from "../../types/userType";
@@ -36,11 +35,21 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    setValue,
+    trigger,
     formState: { errors },
   } = useForm<{ email: string; password: string }>({
     resolver: zodResolver(userDataValidation.loginDataValidationSchema),
   });
-
+  // auto login by cridentials buttons
+  const handleAutoLogin = async (email: string, password: string) => {
+    setValue('email', email),
+      setValue('password', password);
+    const isValid = await trigger();
+    if (isValid) {
+      handleSubmit(onSubmit)();
+    }
+  }
   // form submit handler
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const toastId = toast.loading("loging in...");
@@ -78,94 +87,177 @@ const Login = () => {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           height: "100vh",
-          paddingTop: "100px",
+          py: { xs: 10, md: 20 },
+          px: 1
         }}
       >
         <Box
           className="form-container"
           sx={{
-            backgroundColor: "rgba(0,0,0,0.7)",
+            backgroundColor: "rgba(0,0,0,0.8)",
             margin: "auto",
             width: "fit-content",
-            borderRadius: "16px",
-            padding: "20px",
+            borderRadius: "8px",
             textAlign: "center",
+            px: 2,
+            py: 4,
+            display: 'flex',
+            alignItems: 'flex-start'
           }}
         >
+          {/* <Box sx={{ color: "white" }}>
+            hello
+          </Box> */}
           <Box
             sx={{
-              marginTop: "30px",
+
             }}
           >
-            <h2
-              style={{
-                margin: "0px",
+            <Typography
+              variant="h4"
+              sx={{
                 color: "white",
-                fontWeight: "500",
+                fontWeight: 'bold'
               }}
             >
               {user ? "You are logged in" : "Welcome Back"}
-            </h2>
+            </Typography>
 
             <Link
               to="/register"
               style={{
                 fontSize: "14px",
                 color: "white",
-                margin: "0px",
               }}
             >
               New user? Click for Register
             </Link>
+            <Typography sx={{ color: "white", fontSize: '14px', width: { md: '43ch', }, textAlign: { xs: 'center', md: 'left' }, my: 0.5, mx: 1 }} >
+              Test credentials are available. Click a button below to autofill the login form.
+            </Typography>
+            <Box sx={{ my: 1 }}>
+              {/* admin credentials */}
+              <Button
+                onClick={() => handleAutoLogin('alokdas1dd@gmail.com', '123456')}
+                variant="outlined" sx={{
+
+                  color: "whitesmoke",
+                  border: "2px solid #FF3B4B",
+                  marginBottom: "10px",
+                  mx: 1,
+                  backgroundColor: "rgba(0,0,0,0.6)",
+                  ":hover": {
+                    backgroundColor: "#ff3b4b",
+                  },
+
+                }}>Admin Credentials</Button>
+
+              <Button
+                onClick={() => handleAutoLogin('alok61.bd@gmail.com', '123456')}
+                variant="outlined" sx={{
+                  color: "whitesmoke",
+                  border: "2px solid #FF3B4B",
+                  marginBottom: "10px",
+                  mx: 1,
+                  backgroundColor: "rgba(0,0,0,0.6)",
+                  ":hover": {
+                    backgroundColor: "#ff3b4b",
+                  },
+
+                }}>user Credentials</Button>
+            </Box>
             <h3 className="error-text">{error ? errorMessage : " "}</h3>
             <form
-              className="login-form"
               onSubmit={handleSubmit(onSubmit, (errors) => console.log(errors))}
             >
-              <input
-                className={`input-field ${errors.email ? "error" : ""}`}
-                {...register("email")}
-                placeholder={errors?.email ? errors?.email?.message : "Email"}
-              />
-              <br />
-              <input
-                className={`input-field ${errors.password ? "error" : ""}`}
-                {...register("password")}
-                type={`${showPassword ? "text" : "password"}`}
-                placeholder={
-                  errors.password ? errors?.password?.message : "Password"
-                }
-              />
-              <button
-                style={{
-                  cursor: "pointer",
-                  border: "none",
-                  background: "none",
-                  position: "relative",
-                  bottom: "38px",
-                  left: "90px",
-                }}
-                type="button"
-                onClick={() => {
-                  setShowPassword(!showPassword);
-                }}
-              >
-                {showPassword ? (
-                  <Visibility sx={{ color: "white" }} />
-                ) : (
-                  <VisibilityOff sx={{ color: "white" }} />
-                )}
-              </button>
+              <InputLabel sx={{ color: 'white', textAlign: 'left', mx: 1 }} htmlFor="email">Email</InputLabel>
+              <FormControl sx={{
+                width: { xs: '35ch', md: '43ch', }
 
+              }}>
+
+                <OutlinedInput
+                  id="email"
+                  sx={{
+                    height: 40,
+                    color: 'white',
+                    '& input:-webkit-autofill': {
+                      WebkitBoxShadow: '0 0 0 1000px #121212 inset', // match your input bg
+                      WebkitTextFillColor: 'white', // match your text color
+                      transition: 'background-color 5000s ease-in-out 0s',
+                    },
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#FF3B4B', // default border color
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#FF3B4B', // hover border
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#FF3B4B', // focus border
+                      borderWidth: '2px',
+                    },
+                  }}  {...register('email')} placeholder="Email"
+                />
+                <FormHelperText sx={{ color: '#FF3B4B', fontSize: '16px' }}>
+                  {errors.password?.message as string}
+                </FormHelperText>
+              </FormControl>
+              <br />
+              <InputLabel sx={{ color: 'white', textAlign: 'left', mx: 1, mt: 2 }} htmlFor="password">Password</InputLabel>
+              <FormControl sx={{
+                width: { xs: '35ch', md: '43ch', }
+
+              }}>
+
+                <OutlinedInput
+                  id="password"
+                  sx={{
+                    height: 40,
+
+                    color: 'white',
+                    '& input:-webkit-autofill': {
+                      WebkitBoxShadow: '0 0 0 1000px #121212 inset',
+                      WebkitTextFillColor: "white",
+                      transition: 'background-color 5000s ease-in-out 0s'
+                    },
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#FF3B4B', // default border color
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#FF3B4B', // hover border
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#FF3B4B', // focus border
+                      borderWidth: '2px',
+                    },
+                  }}  {...register('password')} placeholder="Password"
+                  type={`${showPassword ? "text" : "password"}`}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton type="button" onClick={() => {
+                        setShowPassword(!showPassword);
+                      }} edge="end" sx={{ color: '#FF3B4B' }}>
+                        {showPassword ? (
+                          <Visibility sx={{ color: "white" }} />
+                        ) : (
+                          <VisibilityOff sx={{ color: "white" }} />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+                <FormHelperText sx={{ color: '#FF3B4B', fontSize: '16px' }}>
+                  {errors.password?.message as string}
+                </FormHelperText>
+              </FormControl>
               <br />
 
               <Button
+                variant="outlined"
                 sx={{
                   color: "whitesmoke",
-                  border: "2px solid white",
-                  paddingLeft: "30px",
-                  paddingRight: "30px",
-                  marginBottom: "20px",
+                  border: "2px solid #FF3B4B",
+                  my: 3,
                   backgroundColor: "rgba(0,0,0,0.6)",
                   ":hover": {
                     backgroundColor: "#ff3b4b",
@@ -192,7 +284,7 @@ const Login = () => {
             </Link>
           </Box>
         </Box>
-      </Box>
+      </Box >
     </>
   );
 };

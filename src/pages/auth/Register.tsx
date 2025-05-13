@@ -1,12 +1,11 @@
 import { useState } from "react";
-import Button from "@mui/joy/Button";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, Toaster } from "sonner";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import "./Login.css";
 import NavBar from "../../components/navBar/NavBar";
-import { Box } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import banner from "../../assets/carousel/carousel2.jpg";
 import { useRegisterUserMutation } from "../../redux/features/admin/userManagement/userManagementApi";
 import { RotatingLines } from "react-loader-spinner";
@@ -96,13 +95,16 @@ const Register = () => {
             padding: "20px",
             height: { lg: "400px", md: "400px", sm: "360px", xs: "360px" },
             textAlign: "center",
+            color: 'white'
           }}
         >
+
           <Box
             sx={{
               marginTop: "30px",
             }}
           >
+
             <h2
               style={{
                 margin: "0px",

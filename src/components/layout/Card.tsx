@@ -4,18 +4,19 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 // import { ICars } from "../../types/carInterface";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { ICars } from "../../types/carInterface";
 
-const ImgMediaCard = (car: any) => {
-  // console.log(car.data);
+const ImgMediaCard = ({ car }: { car: ICars }) => {
+  console.log(car);
   return (
     <Card sx={{ maxWidth: 460 }}>
       <CardMedia
         component="img"
         alt="green iguana"
         height="140"
-        image={car.data?.photoUrl}
+        image={car?.photoUrl}
       />
       <CardContent sx={{ paddingY: "0px" }}>
         <Box
@@ -24,12 +25,17 @@ const ImgMediaCard = (car: any) => {
             justifyContent: "space-between",
             alignItems: "center",
             color: "black",
+            my: "10px",
+            fontSize: '14px'
           }}
         >
-          <h5>{`${car.data?.brand} ${car.data?.model}`}</h5>
-          <h5>${car.data.price}</h5>
+          <Typography >{`${car?.brand} ${car?.model}`}</Typography>
+          <Typography>${car?.price}</Typography>
         </Box>
-
+        <Box>
+          <Typography>{car?.category}</Typography>
+          <Typography>{car?.ratings?.average}</Typography>
+        </Box>
       </CardContent>
       <CardActions sx={{ padding: '2px' }}>
         <Button
@@ -42,7 +48,7 @@ const ImgMediaCard = (car: any) => {
 
           }}
         >
-          <Link to={`/place-order/${car.data?._id}`}>Buy Now</Link>
+          <Link to={`/place-order/${car?._id}`}>Buy Now</Link>
         </Button>
         <Button
           size="small"
@@ -53,7 +59,7 @@ const ImgMediaCard = (car: any) => {
             marginLeft: "auto",
           }}
         >
-          <Link to={`/cars/${car.data?._id}`}>View Details</Link>
+          <Link to={`/cars/${car?._id}`}>View Details</Link>
         </Button>
       </CardActions>
     </Card>

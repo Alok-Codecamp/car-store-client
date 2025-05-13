@@ -40,6 +40,7 @@ export const FilterPriceRange: React.FC<FilterItemsProps> = ({
         marginLeft: "auto",
         marginRight: "auto",
         marginBottom: "10px",
+
       }}
     >
       <h4 style={{ lineHeight: "0px" }}>Price Range</h4>
@@ -122,6 +123,7 @@ export const SelectLimit = ({
         justifyContent: "center",
         alignItems: "center",
         marginLeft: "auto",
+
       }}
     >
       <h5>{name}</h5>

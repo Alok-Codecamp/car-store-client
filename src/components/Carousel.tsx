@@ -43,8 +43,8 @@ const Carousel = () => {
     <Box
       sx={{
         marginTop: {
-          xs: 7,
-          sm: 12
+          xs: 5,
+          md: 12
         },
 
       }}

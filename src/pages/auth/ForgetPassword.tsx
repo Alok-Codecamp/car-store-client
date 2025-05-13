@@ -1,8 +1,7 @@
-import Button from "@mui/joy/Button";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import "./Login.css";
 import NavBar from "../../components/navBar/NavBar";
-import { Box } from "@mui/material";
+import { Box, Button, FormControl, FormHelperText, OutlinedInput, Typography } from "@mui/material";
 import banner from "../../assets/carousel/carousel2.jpg";
 import { RotatingLines } from "react-loader-spinner";
 
@@ -44,23 +43,25 @@ const ForgetPassword = () => {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           height: "100vh",
-          paddingTop: "100px",
+          px: 2,
+          pt: 22
+
         }}
       >
         <Box
-          className="form-container"
+
           sx={{
-            backgroundColor: "rgba(0,0,0,0.7)",
+            backgroundColor: "rgba(0,0,0,0.9)",
             margin: "auto",
             width: "fit-content",
             borderRadius: "16px",
-            padding: "20px",
             textAlign: "center",
+            px: 2,
+            py: 6
           }}
         >
           <Box
             sx={{
-              marginTop: "30px",
               textAlign: "left",
             }}
           >
@@ -72,17 +73,17 @@ const ForgetPassword = () => {
                 }}
               >
                 <ArrowBack />
-                Back to Login
+                <Typography sx={{ mx: 1 }}>Back to Login</Typography>
               </span>{" "}
             </Link>
             <h4 style={{ color: "white" }}>Forgot your password?</h4>
-            {forgetPasswordResponse ? (
-              <p style={{ color: "white", width: "200px" }}>
+            {Object.keys(forgetPasswordResponse).length > 0 ? (
+              <p style={{ color: "white" }}>
                 {(forgetPasswordResponse?.data as any)?.message ||
                   (forgetPasswordResponse?.error as any)?.data?.message}
               </p>
             ) : (
-              <p style={{ color: "white", width: "200px" }}>
+              <p style={{ color: "white", }}>
                 Please enter the account for which you want to reset the
                 password.
               </p>
@@ -90,27 +91,50 @@ const ForgetPassword = () => {
 
             {/* <h3 className="error-text">{error ? error?.data?.message : " "}</h3> */}
             <form
-              className="login-form"
+              className=""
               onSubmit={handleSubmit(onSubmit, (errors) => console.log(errors))}
             >
-              <input
-                className={`input-field ${errors.email ? "error" : ""}`}
-                {...register("email")}
-                placeholder={errors?.email ? errors?.email?.message : "Email"}
-              />
+              <FormControl sx={{
+                width: { xs: '30ch', md: '40ch', }
+
+              }}>
+                <OutlinedInput sx={{
+                  height: 40,
+                  color: 'white',
+                  '& input:-webkit-autofill': {
+                    WebkitBoxShadow: '0 0 0 1000px #121212 inset', // match your input bg
+                    WebkitTextFillColor: 'white', // match your text color
+                    transition: 'background-color 5000s ease-in-out 0s',
+                  },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#FF3B4B', // default border color
+                  },
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#FF3B4B', // hover border
+                  },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#FF3B4B', // focus border
+                    borderWidth: '2px',
+                  },
+                }}  {...register('email')} placeholder="Email"
+                />
+                <FormHelperText sx={{ color: '#FF3B4B', fontSize: '16px' }}>
+                  {errors.email?.message as string}
+                </FormHelperText>
+              </FormControl>
 
               <br />
 
               <Button
                 sx={{
                   color: "whitesmoke",
-                  border: "2px solid white",
+                  border: "1px solid #FF3B4B",
                   marginTop: "10px",
                   paddingLeft: "30px",
                   paddingRight: "30px",
                   backgroundColor: "rgba(0,0,0,0.6)",
                   ":hover": {
-                    backgroundColor: "#ff3b4b",
+                    backgroundColor: "#FF3B4B",
                   },
                 }}
                 disabled={forgetPasswordResponse.data ? true : false}

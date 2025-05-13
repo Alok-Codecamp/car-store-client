@@ -13,10 +13,13 @@ import logo from "../../assets/logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logOut, selectCurrentUser } from "../../redux/features/auth/authSlice";
-import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { Button, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { navItems } from "../constants";
-import { Dashboard, Login, Logout } from "@mui/icons-material";
+import { Dashboard, FavoriteBorder, GarageOutlined, Login, Logout, PersonOutlined, Search } from "@mui/icons-material";
 import Categories from "../categories/Categories";
+import SearchForm from "../form/SearchForm";
+
+
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
@@ -30,24 +33,29 @@ type TUser = {
   iat: number;
   exp: number;
 };
+
+
 const drawerWidth = 240;
 
 const NavBar = (props: Props) => {
   const { window } = props;
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const [showSearch, setShowSearch] = React.useState(false);
   const dispatch = useAppDispatch();
-
   const user = useAppSelector(selectCurrentUser) as TUser;
-
+  // handle sidebar drawer 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+
+
   const handleLogOut = () => {
     dispatch(logOut());
     navigate("/login");
   };
+
   // for mobile menu
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -101,18 +109,12 @@ const NavBar = (props: Props) => {
     <Box
       sx={{
         display: "flex",
-
       }}
     >
       <CssBaseline />
       <AppBar
         component="nav"
-        sx={{
-          backgroundColor: "white",
-
-
-        }}
-      >
+        sx={{ backgroundColor: "white", }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -123,23 +125,30 @@ const NavBar = (props: Props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Box sx={{ display: { xs: "none", sm: "block", marginLeft: "12px" } }}>
+          <Box sx={{ display: { xs: "none", sm: "block", }, ml: 1 }}>
             <Link to="/home">
-
               <img src={logo} alt="logo" width={150} />
             </Link>
           </Box>
+          <Box sx={{
+            display: { xs: 'none', sm: 'none', md: 'block' }, mx: 2
+          }}>
+            <SearchForm formWidth={55} formHeight={48} />
+          </Box>
+          <Button onClick={() => setShowSearch(!showSearch)} sx={{ display: { xs: 'block', sm: 'none', md: 'none', lg: 'none', xl: 'none' }, color: 'red', width: 'fit-content', ml: 'auto' }}><Search /></Button>
           <Box
-            sx={{ display: { xs: "none", sm: "block" }, marginLeft: "auto" }}
+            sx={{ display: { xs: "none", sm: "block" } }}
           >
+
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginRight: "20px"
+
               }}
             >
+
               {navItems.map((item, index) => (
                 <NavLink
                   key={index}
@@ -157,51 +166,81 @@ const NavBar = (props: Props) => {
                   {item.name}
                 </NavLink>
               ))}
-              {user && <NavLink
+              {user ? <NavLink
                 to={user ? `/${user?.role}/dashboard` : "/login"}
                 style={({ isActive }) => ({
                   marginRight: "10px",
                   marginLeft: "10px",
                   color: "black",
-                  fontWeight: "500",
                   textDecoration: isActive ? "underline" : "none",
                   textDecorationColor: isActive ? "#ff3b4b" : "transparent",
                   textDecorationThickness: isActive ? "3px" : "0px",
                 })}
               >
                 Dashboard
-              </NavLink>}
-              <Box>
+              </NavLink> : <Box sx={{ width: 58 }}></Box>}
+              <Box sx={{
+                color: 'black',
+                textAlign: 'center',
+                borderLeft: '1px solid black',
+                ml: 2,
+                pl: 2
+
+              }}>
+
+                <PersonOutlined sx={{ fontSize: '30px', color: '#ff3b4b' }} />
                 {user ? (
+
                   <button
                     onClick={handleLogOut}
                     style={{
-                      color: "red",
                       cursor: "pointer",
-                      height: "26px",
-                      fontWeight: "500",
-                      fontSize: "16px",
+                      fontSize: "13px",
                       border: "none",
+                      display: 'block',
+                      marginLeft: '10px'
                     }}
                   >
-                    logout
+                    Logout
                   </button>
                 ) : (
                   <Link
                     to="/login"
-                    style={{ color: "black", cursor: "pointer" }}
-                  >
-                    login/signup
-                  </Link>
-                )}
-              </Box>
+                    style={{
+                      color: "black",
+                      cursor: "pointer",
+                      display: 'block',
+                      fontSize: "13px",
 
+                    }}
+                  >
+                    <Link to='/login' style={{ marginRight: '10px' }}>Login</Link>|<Link to='/register' style={{ marginLeft: '10px' }}>Register</Link>
+                  </Link>
+
+                )}
+
+              </Box>
+              <Box sx={{
+                color: "black",
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderLeft: '1px solid black',
+                columnGap: 2,
+                ml: 2,
+                pl: 2,
+
+              }}>
+                <Link to='/place-order' style={{ textAlign: 'center', }}><FavoriteBorder sx={{ fontSize: '30px', color: '#ff3b4b' }} /><Typography sx={{ fontSize: '13px' }}>Wishlist</Typography></Link>
+                <Link to='/place-order' style={{ textAlign: 'center', }}><GarageOutlined sx={{ fontSize: '30px', color: '#ff3b4b' }} /><Typography sx={{ fontSize: '13px' }}>Selections</Typography></Link>
+              </Box>
             </Box>
           </Box>
 
         </Toolbar>
         <Categories />
       </AppBar>
+
       <nav>
         <Drawer
           container={container}
@@ -222,6 +261,17 @@ const NavBar = (props: Props) => {
           {drawer}
         </Drawer>
       </nav>
+      <Box
+        sx={{
+          display: showSearch ? 'block' : 'none',
+          mx: 2,
+          mt: { xs: '64px', sm: 2 }, // Enough spacing below the sticky AppBar on mobile
+          p: 0,
+          height: 2
+        }}
+      >
+        <SearchForm formWidth={38} formHeight={36} />
+      </Box>
     </Box>
   );
 };

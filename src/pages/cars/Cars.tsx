@@ -9,7 +9,7 @@ import {
   Pagination,
   Stack,
 } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   BrandingWatermark,
   Category,
@@ -34,6 +34,7 @@ import ImgMediaCard from "../../components/layout/Card";
 type Anchor = "right";
 
 const Cars = () => {
+  // local states  
   const [page, setPage] = useState(1);
   const [open, setOpen] = useState([true, true, true]);
   const [state, setState] = useState({ right: false });
@@ -46,11 +47,21 @@ const Cars = () => {
   const [category, setCategory] = useState<string[]>([]);
   const [brand, setBrand] = useState<string[]>([]);
   const [inStock, setInstock] = useState(true);
+  // use hooks 
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const navSearchFieldValue = searchParams.get('searchTerm');
   // set sort value based on selected sort
+
   useEffect(() => {
+    if (navSearchFieldValue) {
+      setSearch(navSearchFieldValue);
+      navigate("/cars", { replace: true });
+    }
     setSort(sortBy === "Price(Low>High)" ? "price" : "-price");
   }, [sortBy]);
   const queryArray = useMemo(() => {
+
     return [
       { name: "limit", value: limit },
       { name: "sort", value: sort },
@@ -66,7 +77,7 @@ const Cars = () => {
 
   // Get car query
   const { data: cars, isLoading, error } = useGetCarsQuery(queryArray);
-  console.log(cars, error);
+  console.log(cars);
   // get location for breadCrumbs
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
@@ -75,18 +86,18 @@ const Cars = () => {
   // drawer toggler
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
-    (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event &&
-        event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
-      ) {
-        return;
-      }
+      (event: React.KeyboardEvent | React.MouseEvent) => {
+        if (
+          event &&
+          event.type === "keydown" &&
+          ((event as React.KeyboardEvent).key === "Tab" ||
+            (event as React.KeyboardEvent).key === "Shift")
+        ) {
+          return;
+        }
 
-      setState({ ...state, [anchor]: open });
-    };
+        setState({ ...state, [anchor]: open });
+      };
 
   // handle search box
   const handleSearch = () => {
@@ -127,16 +138,19 @@ const Cars = () => {
     event: React.ChangeEvent<unknown>,
     value: number
   ) => {
-    console.log(event);
+
     setPage(value);
     console.log("Selected Page:", value); // Get the pagination value
   };
+
+  // mobile menu llist 
   const list = () => (
     <Box
       sx={{ width: 280 }}
       role="presentation"
       onClick={(e) => e.stopPropagation()}
       onKeyDown={(e) => e.stopPropagation()}
+
     >
       <FilterPriceRange
         setMinPrice={setMinPrice}
@@ -182,6 +196,11 @@ const Cars = () => {
         <FilterListItem
           handleChange={handleBrandChange}
           value="BMW"
+          filterName={brand}
+        />
+        <FilterListItem
+          handleChange={handleBrandChange}
+          value="Tata"
           filterName={brand}
         />
         <FilterListItem
@@ -292,14 +311,19 @@ const Cars = () => {
           sx={{
             display: { lg: "grid", md: "grid" },
             gridTemplateColumns: "25% 75%",
+
           }}
         >
           <Box
             sx={{
-              display: { xs: "none", sm: "none", md: "block", lg: "block" },
-              border: "1px solid gray",
+              display: { xs: "none", sm: "none", md: "block", lg: "block", },
+              border: "1px solid lightGray",
               paddingTop: "20px",
+              bgcolor: '#F5F5F5',
+
+
             }}
+
           >
             <FilterPriceRange
               setMinPrice={setMinPrice}
@@ -345,6 +369,16 @@ const Cars = () => {
               <FilterListItem
                 handleChange={handleBrandChange}
                 value="BMW"
+                filterName={brand}
+              />
+              <FilterListItem
+                handleChange={handleBrandChange}
+                value="Tata"
+                filterName={brand}
+              />
+              <FilterListItem
+                handleChange={handleBrandChange}
+                value="Toyota"
                 filterName={brand}
               />
               <FilterListItem
@@ -448,6 +482,7 @@ const Cars = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   marginLeft: "auto",
+
                 }}
               >
                 {/* Search item box */}
@@ -457,6 +492,7 @@ const Cars = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     marginRight: "20px",
+
                   }}
                 >
                   <SearchBox
@@ -492,17 +528,20 @@ const Cars = () => {
                 paddingLeft: "30px",
                 paddingRight: "30px",
                 textAlign: "center",
+
               }}
             >
               <h2>Your perfect ride is just a click away!</h2>
               {isLoading ? (
                 <FeaturedSkelton quantity={4} />
               ) : (
-                <Grid2 container spacing={2}>
+                <Grid2 container spacing={2} sx={{
+
+                }}>
                   {Array.isArray(cars) &&
                     cars?.map((car: ICars, index: number) => (
                       <Grid2 key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-                        <ImgMediaCard data={car} />
+                        <ImgMediaCard car={car} />
                       </Grid2>
                     ))}
                 </Grid2>
